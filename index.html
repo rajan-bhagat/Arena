@@ -61,13 +61,12 @@
         ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
-        /* SCROLL FIX: Ensure body handles 100vh properly without clipping */
+        /* SCROLL FIX: Ensure viewport space is explicitly assigned without layout clipping */
         body { background-color: var(--bg-body); color: var(--text-main); height: 100vh; overflow: hidden; display: flex;}
         h1, h2, h3, h4, h5 { font-family: 'Poppins', sans-serif; color: var(--text-main); }
         
         /* Layout & Sidebar */
         .sidebar { width: 280px; background-color: var(--bg-surface); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; z-index: 50; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; box-shadow: var(--shadow-md);}
-        /* SCROLL FIX: Prevent header from shrinking */
         .brand { flex-shrink: 0; padding: 24px 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 10px; display:flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, var(--bg-surface) 0%, var(--hover-bg) 100%);}
         .brand h1 { font-size: 1.4rem; color: var(--primary); display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -0.5px;}
         .close-sidebar-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer;}
@@ -83,7 +82,6 @@
         .main-wrapper { flex-grow: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; position: relative;}
         
         /* Top App Bar */
-        /* SCROLL FIX: flex-shrink: 0 prevents the navbar from squishing, keeping main-content sizing accurate */
         .top-app-bar { flex-shrink: 0; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 16px 30px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; z-index: 10; position: relative; box-shadow: var(--shadow-sm);}
         [data-theme="dark"] .top-app-bar { background-color: rgba(30, 41, 59, 0.8); }
         .hamburger-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer; display: none; margin-right: 15px;}
@@ -105,7 +103,7 @@
         .noti-item:hover { background: var(--hover-bg); }
         .noti-actions { display: flex; gap: 8px; margin-top: 5px;}
 
-        /* SCROLL FIX: Added padding-bottom to ensure the end of content isn't clipped */
+        /* SCROLL FIX: Set comprehensive bottom padding metrics to assure scannability */
         .main-content { flex-grow: 1; padding: 30px 30px 60px 30px; overflow-y: auto; background: var(--bg-body);}
         .grid-layout { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1400px; margin: 0 auto; }
 
@@ -182,7 +180,7 @@
         .status-trailing { background: rgba(239, 68, 68, 0.1); color: var(--accent-danger); }
         .status-tied { background: rgba(245, 158, 11, 0.1); color: var(--accent-warning); }
 
-        /* --- REDESIGNED INBOX MESSAGE PAGE (User-Friendly UX) --- */
+        /* --- USER-FRIENDLY INBOX CHAT SYSTEM DESIGN --- */
         .im-messenger-container { display: grid; grid-template-columns: 340px 1fr; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius); height: calc(100vh - 180px); overflow: hidden; box-shadow: var(--shadow-lg); }
         @media (max-width: 850px) { .im-messenger-container { grid-template-columns: 1fr; height: calc(100vh - 200px); } .im-chat-window-pane.hidden-mobile { display: none !important; } }
         
@@ -206,13 +204,11 @@
         .im-chat-header-bar { padding: 16px 24px; background: var(--bg-surface); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); z-index: 1;}
         .im-chat-logs-viewport { flex-grow: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background-image: radial-gradient(var(--border-color) 1px, transparent 1px); background-size: 20px 20px; }
         
-        /* Modern Chat Bubbles */
         .im-msg-bubble { max-width: 75%; padding: 14px 20px; border-radius: 20px; font-size: 0.95rem; line-height: 1.5; position: relative; word-wrap: break-word; box-shadow: var(--shadow-sm);}
         .im-msg-bubble.outgoing-node { align-self: flex-end; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); color: white; border-bottom-right-radius: 4px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);}
         .im-msg-bubble.incoming-node { align-self: flex-start; background: var(--bg-surface); color: var(--text-main); border-bottom-left-radius: 4px; border: 1px solid var(--border-color); }
         .im-msg-timestamp { font-size: 0.7rem; opacity: 0.7; text-align: right; margin-top: 6px; font-weight: 500;}
         
-        /* Floating Chat Input Dock */
         .im-chat-input-dock { padding: 20px 24px; background: var(--bg-surface); border-top: 1px solid var(--border-color); display: flex; gap: 12px; align-items: center; z-index: 1;}
         .im-chat-input-dock input { flex-grow: 1; border-radius: 30px; padding: 16px 24px; background: var(--input-bg); border: 1px solid transparent; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); transition: all 0.3s;}
         .im-chat-input-dock input:focus { background: var(--bg-surface); border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79,70,229,0.1); outline: none;}
@@ -220,7 +216,6 @@
         .im-chat-input-dock button { border-radius: 50%; width: 52px; height: 52px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-left: 4px; flex-shrink: 0;}
         .im-blank-state-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); gap: 16px; font-size: 1rem; font-weight: 500;}
         .im-blank-state-view div { background: var(--bg-surface); padding: 16px 24px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);}
-        /* --- END INBOX REDESIGN --- */
 
         .vs-arena-container { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); border-radius: var(--radius); padding: 40px; display: flex; justify-content: space-around; align-items: center; position: relative; overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow-lg); color: white; border: 1px solid rgba(255,255,255,0.1);}
         .vs-fighter-block { display: flex; flex-direction: column; align-items: center; text-align: center; width: 40%; z-index: 2; }
@@ -337,7 +332,11 @@
 
     <div class="sidebar-footer">
         <span id="cloud-status" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display:flex; align-items:center; gap:6px;">🟢 Synced</span>
-        <button class="btn-alt" onclick="logout()" style="width: 100%; margin-top: 15px; border-color: var(--border-color);">Logout</button>
+        
+        <!-- PWA Install Button (Dynamic presentation toggle) -->
+        <button id="install-pwa-btn" class="btn-success" style="display: none; width: 100%; margin-top: 15px; box-shadow: var(--shadow-sm);">📱 Install App</button>
+        
+        <button class="btn-alt" onclick="logout()" style="width: 100%; margin-top: 10px; border-color: var(--border-color);">Logout</button>
     </div>
 </nav>
 
@@ -485,7 +484,7 @@
                 </div>
             </div>
 
-            <!-- TAB AREA: WHATSAPP STYLE MESSENGER HUB (Redesigned) -->
+            <!-- TAB AREA: WHATSAPP STYLE MESSENGER HUB -->
             <div id="tab-inbox" class="tab-content hidden">
                 <div class="im-messenger-container">
                     <div class="im-roster-sidebar">
@@ -512,7 +511,6 @@
                         </div>
                         <div class="im-chat-input-dock hidden" id="im-chat-input-row">
                             <input type="text" id="im-chat-input-field" placeholder="Message..." onkeypress="if(event.key === 'Enter') sendRosterMessage()">
-                            <!-- Updated to icon for a modern messaging feel -->
                             <button onclick="sendRosterMessage()" title="Send">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                             </button>
@@ -2158,6 +2156,40 @@
         generateResponsiveBars('study-hours-svg', visibleSliceData, 'hours', 'var(--primary)');
         generateResponsiveBars('study-points-svg', visibleSliceData, 'points', '#0EA5E9');
     }
+
+    /* ==========================================
+       PWA INSTALLATION ENGINE
+       ========================================== */
+    let deferredPrompt;
+    const installBtn = document.getElementById('install-pwa-btn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if(installBtn) {
+            installBtn.style.display = 'block';
+        }
+    });
+
+    if(installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted app setup prompt');
+                }
+                deferredPrompt = null;
+                installBtn.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('appinstalled', () => {
+        if(installBtn) installBtn.style.display = 'none';
+        deferredPrompt = null;
+        console.log('PWA system initialization complete');
+    });
 
     document.getElementById('username-group').style.display = "none";
 </script>
