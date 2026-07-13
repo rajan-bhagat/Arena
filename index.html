@@ -2,240 +2,300 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JEE Study Arena | Command Center</title>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* --- THEME SYSTEM (CSS VARIABLES) --- */
+        /* --- PROFESSIONAL ED-TECH THEME SYSTEM --- */
         :root {
-            --primary: #1d4ed8;
-            --primary-hover: #1e40af;
-            --bg-body: #f8fafc;
-            --bg-surface: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --accent-success: #10b981;
-            --accent-danger: #ef4444;
-            --accent-warning: #f59e0b;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --radius: 10px;
-            --input-bg: #f8fafc;
-            --hover-bg: #f1f5f9;
+            --primary: #4F46E5; 
+            --primary-hover: #4338CA;
+            --secondary: #0EA5E9; 
+            --bg-body: #F3F4F6; 
+            --bg-surface: #FFFFFF;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border-color: #E5E7EB;
+            --accent-success: #10B981;
+            --accent-danger: #EF4444;
+            --accent-warning: #F59E0B;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --input-bg: #F9FAFB;
+            --hover-bg: #F3F4F6;
         }
 
         [data-theme="dark"] {
-            --primary: #3b82f6;
-            --primary-hover: #60a5fa;
-            --bg-body: #0f172a;
-            --bg-surface: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-color: rgba(255,255,255,0.1);
+            --primary: #6366F1;
+            --primary-hover: #818CF8;
+            --secondary: #38BDF8;
+            --bg-body: #0F172A;
+            --bg-surface: #1E293B;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border-color: rgba(255,255,255,0.08);
             --shadow-sm: 0 4px 6px rgba(0,0,0,0.3);
-            --shadow-md: 0 10px 15px rgba(0,0,0,0.4);
-            --input-bg: #0f172a;
+            --shadow-md: 0 10px 25px rgba(0,0,0,0.4);
+            --shadow-lg: 0 20px 30px rgba(0,0,0,0.5);
+            --input-bg: #0F172A;
             --hover-bg: #334155;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+        
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* SCROLL FIX: Ensure body handles 100vh properly without clipping */
         body { background-color: var(--bg-body); color: var(--text-main); height: 100vh; overflow: hidden; display: flex;}
-        h1, h2, h3, h4, h5 { font-family: 'Poppins', sans-serif; }
+        h1, h2, h3, h4, h5 { font-family: 'Poppins', sans-serif; color: var(--text-main); }
         
         /* Layout & Sidebar */
-        .sidebar { width: 260px; background-color: var(--bg-surface); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; padding: 20px 0; z-index: 50; transition: transform 0.3s ease; flex-shrink: 0;}
-        .brand { padding: 0 20px 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 10px; display:flex; justify-content: space-between; align-items: center;}
-        .brand h1 { font-size: 1.3rem; color: var(--primary); display: flex; align-items: center; gap: 8px;}
+        .sidebar { width: 280px; background-color: var(--bg-surface); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; z-index: 50; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; box-shadow: var(--shadow-md);}
+        /* SCROLL FIX: Prevent header from shrinking */
+        .brand { flex-shrink: 0; padding: 24px 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 10px; display:flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, var(--bg-surface) 0%, var(--hover-bg) 100%);}
+        .brand h1 { font-size: 1.4rem; color: var(--primary); display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -0.5px;}
         .close-sidebar-btn { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer;}
         
-        .nav-menu { flex-grow: 1; padding: 0 15px; overflow-y: auto;}
-        .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 12px 15px; border-radius: 8px; cursor: pointer; width: 100%; text-align: left; font-size: 0.95rem; font-weight: 500; display: flex; align-items: center; gap: 10px; margin-bottom: 5px;}
-        .tab-btn:hover { background-color: var(--hover-bg); color: var(--text-main); }
-        .tab-btn.active { background-color: rgba(59, 130, 246, 0.1); color: var(--primary); font-weight: 600; }
+        .nav-menu { flex-grow: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;}
+        .tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 14px 18px; border-radius: var(--radius-sm); cursor: pointer; width: 100%; text-align: left; font-size: 0.95rem; font-weight: 600; display: flex; align-items: center; gap: 12px;}
+        .tab-btn:hover { background-color: var(--hover-bg); color: var(--text-main); transform: translateX(4px); }
+        .tab-btn.active { background-color: rgba(79, 70, 229, 0.1); color: var(--primary); transform: none; box-shadow: inset 4px 0 0 var(--primary);}
         
-        .sidebar-footer { padding: 20px; border-top: 1px solid var(--border-color); }
+        .sidebar-footer { flex-shrink: 0; padding: 20px; border-top: 1px solid var(--border-color); background: var(--bg-surface); }
         
         /* Main Content wrapper */
         .main-wrapper { flex-grow: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; position: relative;}
         
         /* Top App Bar */
-        .top-app-bar { background-color: var(--bg-surface); padding: 15px 25px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; z-index: 10; position: relative;}
+        /* SCROLL FIX: flex-shrink: 0 prevents the navbar from squishing, keeping main-content sizing accurate */
+        .top-app-bar { flex-shrink: 0; background-color: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 16px 30px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; z-index: 10; position: relative; box-shadow: var(--shadow-sm);}
+        [data-theme="dark"] .top-app-bar { background-color: rgba(30, 41, 59, 0.8); }
         .hamburger-btn { background: none; border: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer; display: none; margin-right: 15px;}
         .header-left { display: flex; align-items: center; }
-        .page-title { font-size: 1.4rem; font-weight: 600; margin: 0; }
-        .header-right { display: flex; align-items: center; gap: 15px; position: relative;}
+        .page-title { font-size: 1.3rem; font-weight: 700; margin: 0; letter-spacing: -0.3px;}
+        .header-right { display: flex; align-items: center; gap: 12px; position: relative;}
         
-        .theme-toggle { background: var(--hover-bg); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 20px; cursor: pointer; color: var(--text-main); font-size: 0.9rem; display: flex; align-items: center; gap: 6px;}
+        .theme-toggle { background: var(--input-bg); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; cursor: pointer; color: var(--text-main); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px; box-shadow: var(--shadow-sm);}
+        .theme-toggle:hover { background: var(--border-color); }
 
-        /* Notification Bar Elements */
-        .noti-btn { background: var(--hover-bg); border: 1px solid var(--border-color); padding: 8px 14px; border-radius: 20px; cursor: pointer; color: var(--text-main); font-size: 0.9rem; display: flex; align-items: center; gap: 6px; position: relative; font-weight: 500;}
-        .noti-badge { position: absolute; top: -5px; right: -5px; background: var(--accent-danger); color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; font-weight: bold;}
-        .noti-dropdown { position: absolute; top: 50px; right: 0; width: 340px; background: var(--bg-surface); border: 1px solid var(--border-color); box-shadow: var(--shadow-md); border-radius: var(--radius); padding: 15px; display: none; flex-direction: column; gap: 10px; z-index: 100; max-height: 400px; overflow-y: auto;}
-        .noti-dropdown.active { display: flex; }
-        .noti-section-title { font-size: 0.8rem; font-weight: bold; text-transform: uppercase; color: var(--text-muted); padding-bottom: 5px; border-bottom: 1px solid var(--border-color); margin-top: 5px; }
-        .noti-item { padding: 10px; border-bottom: 1px solid var(--border-color); font-size: 0.85rem; display: flex; flex-direction: column; gap: 5px;}
-        .noti-item:last-child { border-bottom: none; }
-        .noti-actions { display: flex; gap: 5px; margin-top: 5px;}
+        .noti-btn { background: var(--input-bg); border: 1px solid var(--border-color); padding: 8px 16px; border-radius: 20px; cursor: pointer; color: var(--text-main); font-size: 0.9rem; display: flex; align-items: center; gap: 6px; position: relative; font-weight: 600; box-shadow: var(--shadow-sm);}
+        .noti-btn:hover { background: var(--border-color); }
+        .noti-badge { position: absolute; top: -6px; right: -6px; background: var(--accent-danger); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: bold; box-shadow: 0 0 0 2px var(--bg-surface);}
+        .noti-dropdown { position: absolute; top: 55px; right: 0; width: 360px; background: var(--bg-surface); border: 1px solid var(--border-color); box-shadow: var(--shadow-lg); border-radius: var(--radius); padding: 15px; display: none; flex-direction: column; gap: 10px; z-index: 100; max-height: 450px; overflow-y: auto;}
+        .noti-dropdown.active { display: flex; animation: slideDown 0.2s ease-out; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .noti-section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); padding-bottom: 8px; border-bottom: 1px solid var(--border-color); margin-top: 5px; letter-spacing: 0.5px;}
+        .noti-item { padding: 12px; border-radius: var(--radius-sm); font-size: 0.85rem; display: flex; flex-direction: column; gap: 6px; background: var(--input-bg); transition: 0.2s;}
+        .noti-item:hover { background: var(--hover-bg); }
+        .noti-actions { display: flex; gap: 8px; margin-top: 5px;}
 
-        .main-content { flex-grow: 1; padding: 25px 30px; overflow-y: auto; background: var(--bg-body);}
-        .grid-layout { display: grid; grid-template-columns: 1fr; gap: 25px; }
+        /* SCROLL FIX: Added padding-bottom to ensure the end of content isn't clipped */
+        .main-content { flex-grow: 1; padding: 30px 30px 60px 30px; overflow-y: auto; background: var(--bg-body);}
+        .grid-layout { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1400px; margin: 0 auto; }
 
         @media (max-width: 950px) {
             .hamburger-btn { display: block; }
-            .sidebar { position: fixed; top: 0; left: 0; height: 100vh; transform: translateX(-100%); box-shadow: var(--shadow-md); z-index: 2100; }
+            .sidebar { position: fixed; top: 0; left: 0; height: 100vh; transform: translateX(-100%); box-shadow: var(--shadow-lg); z-index: 2100; }
             .sidebar.open { transform: translateX(0); }
             .close-sidebar-btn { display: block; }
-            .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2050; display: none; }
+            .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 2050; display: none; }
             .sidebar-overlay.open { display: block; }
+            .main-content { padding: 20px 20px 80px 20px; }
         }
 
-        /* Cards & Forms */
-        .card { background-color: var(--bg-surface); border-radius: var(--radius); padding: 25px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 25px; }
-        .card h3 { margin-bottom: 20px; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;}
+        .card { background-color: var(--bg-surface); border-radius: var(--radius); padding: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow-md); margin-bottom: 24px; }
+        .card h3 { margin-bottom: 24px; font-size: 1.2rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px;}
         
-        .form-group { margin-bottom: 18px; }
-        label { display: block; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
-        input, select, textarea { width: 100%; padding: 12px; background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 8px; font-size: 0.95rem;}
-        input:focus { outline: none; border-color: var(--primary); }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600; color: var(--text-main); }
+        input, select, textarea { width: 100%; padding: 12px 16px; background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); border-radius: var(--radius-sm); font-size: 0.95rem; font-weight: 500; transition: border-color 0.2s, box-shadow 0.2s;}
+        input:focus, select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15); }
 
-        button { width: 100%; padding: 10px 15px; background-color: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: var(--shadow-sm); text-align: center;}
-        button:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
-        button.btn-alt { background-color: transparent; border: 1px solid var(--primary); color: var(--primary); box-shadow: none;}
-        button.btn-alt:hover { background-color: rgba(59, 130, 246, 0.1); }
-        button.btn-success { background-color: var(--accent-success); }
+        button { width: 100%; padding: 12px 20px; background-color: var(--primary); color: white; border: none; border-radius: var(--radius-sm); font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); text-align: center;}
+        button:hover { background-color: var(--primary-hover); transform: translateY(-1px); box-shadow: 0 6px 15px rgba(79, 70, 229, 0.4);}
+        button:active { transform: translateY(0); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; transform: none; }
+        button.btn-alt { background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-main); box-shadow: none;}
+        button.btn-alt:hover { background-color: var(--hover-bg); border-color: var(--text-muted);}
+        button.btn-success { background-color: var(--accent-success); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);}
+        button.btn-success:hover { background-color: #059669; }
         button.btn-danger { background-color: transparent; color: var(--accent-danger); border: 1px solid var(--accent-danger); box-shadow: none;}
         button.btn-danger:hover { background-color: rgba(239, 68, 68, 0.1); }
-        button.btn-small { width: auto; padding: 6px 12px; font-size: 0.85rem; }
+        button.btn-small { width: auto; padding: 8px 16px; font-size: 0.85rem; }
 
-        /* Dynamic Board Filter Controls */
-        .filter-tabs { display: flex; gap: 10px; margin-bottom: 20px; background: var(--input-bg); padding: 6px; border-radius: 8px; border: 1px solid var(--border-color); max-width: 400px; }
-        .filter-tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; flex: 1; text-align: center; box-shadow: none; }
+        .filter-tabs { display: flex; gap: 8px; margin-bottom: 24px; background: var(--input-bg); padding: 6px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); max-width: fit-content; flex-wrap: wrap; }
+        .filter-tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 8px 20px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; text-align: center; box-shadow: none; min-width: 80px;}
         .filter-tab-btn:hover { color: var(--text-main); background: var(--bg-surface); }
-        .filter-tab-btn.active { background: var(--primary); color: white; }
+        .filter-tab-btn.active { background: var(--bg-surface); color: var(--primary); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); }
 
-        /* Tables */
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 14px 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
-        th { color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
-        .leaderboard-row { cursor: pointer; }
+        .pagination-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; background: var(--bg-surface); padding: 12px 20px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);}
+        .pagination-label { font-weight: 600; font-size: 0.95rem; font-family: 'Poppins'; color: var(--text-main); }
+
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        th, td { padding: 16px 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { color: var(--text-muted); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; background: var(--input-bg); border-bottom: none; }
+        th:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+        th:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+        .leaderboard-row { cursor: pointer; transition: background 0.2s; }
         .leaderboard-row:hover { background: var(--hover-bg); }
-        .streak-badge { background-color: rgba(245, 158, 11, 0.15); color: #ea580c; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; border: 1px solid rgba(245, 158, 11, 0.25);}
+        .streak-badge { background-color: rgba(245, 158, 11, 0.15); color: #D97706; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(245, 158, 11, 0.3);}
 
-        /* Private War Room Layouts */
-        .warroom-split-dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
+        .warroom-split-dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 15px; }
         @media (max-width: 768px) { .warroom-split-dashboard { grid-template-columns: 1fr; } }
-        .warroom-stat-card { background: var(--input-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; text-align: center; }
-        .warroom-metric-label { font-size: 0.8rem; font-weight: bold; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; }
-        .warroom-metric-value { font-size: 1.6rem; font-family: 'Poppins'; font-weight: 700; color: var(--primary); }
+        .warroom-stat-card { background: var(--bg-surface); border: 1px solid var(--border-color); padding: 24px; border-radius: var(--radius); text-align: center; box-shadow: var(--shadow-sm); transition: transform 0.2s;}
+        .warroom-stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .warroom-metric-label { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
+        .warroom-metric-value { font-size: 2rem; font-family: 'Poppins'; font-weight: 800; color: var(--primary); }
 
-        /* Advanced Challenge Cards Layout */
-        .challenge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-top: 15px; }
-        .challenge-box-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
-        .challenge-box-card.active-state { border-left: 5px solid var(--accent-warning); }
-        .challenge-box-card.accepted-state { border-left: 5px solid var(--primary); }
-        .challenge-box-card.declined-state { border-left: 5px solid var(--accent-danger); opacity: 0.7; }
-        .challenge-box-card.expired-state { border-left: 5px solid var(--text-muted); opacity: 0.8; }
-        .challenge-tag-badge { absolute: top 15px; right: 15px; font-size: 0.75rem; font-weight: bold; padding: 3px 8px; border-radius: 12px; text-transform: uppercase; margin-left: auto; width: fit-content;}
-        .challenge-header-block { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-        .challenge-title-text { font-family: 'Poppins'; font-weight: 600; font-size: 1rem; color: var(--text-main); }
-        .challenge-comparison-row { display: flex; justify-content: space-between; align-items: center; background: var(--input-bg); padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); margin: 5px 0; }
+        .challenge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; margin-top: 15px; }
+        .challenge-box-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 16px; position: relative; overflow: hidden; transition: transform 0.2s; }
+        .challenge-box-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .challenge-box-card.active-state { border-top: 4px solid var(--accent-warning); }
+        .challenge-box-card.accepted-state { border-top: 4px solid var(--primary); }
+        .challenge-box-card.declined-state { border-top: 4px solid var(--accent-danger); opacity: 0.7; }
+        .challenge-box-card.expired-state { border-top: 4px solid var(--text-muted); opacity: 0.8; }
+        .challenge-tag-badge { position: absolute; top: 20px; right: 20px; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+        .challenge-header-block { display: flex; align-items: flex-start; flex-direction: column; gap: 4px; padding-right: 70px;}
+        .challenge-title-text { font-family: 'Poppins'; font-weight: 700; font-size: 1.1rem; color: var(--text-main); line-height: 1.3;}
+        .challenge-comparison-row { display: flex; justify-content: space-between; align-items: center; background: var(--input-bg); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin: 5px 0; }
         .challenge-competitor-slot { text-align: center; flex: 1; }
-        .challenge-competitor-val { font-size: 1.2rem; font-weight: 700; font-family: 'Poppins'; color: var(--text-main); }
-        .challenge-vs-divider { font-weight: 900; color: var(--accent-danger); font-style: italic; padding: 0 10px; font-size: 0.9rem; }
-        .challenge-realtime-status-banner { text-align: center; padding: 6px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; font-family: 'Poppins'; text-transform: uppercase; letter-spacing: 0.5px; }
-        .status-leading { background: rgba(16, 185, 129, 0.15); color: var(--accent-success); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .status-trailing { background: rgba(239, 68, 68, 0.15); color: var(--accent-danger); border: 1px solid rgba(239, 68, 68, 0.3); }
-        .status-tied { background: rgba(245, 158, 11, 0.15); color: var(--accent-warning); border: 1px solid rgba(245, 158, 11, 0.3); }
+        .challenge-competitor-val { font-size: 1.4rem; font-weight: 800; font-family: 'Poppins'; color: var(--text-main); margin-top: 4px;}
+        .challenge-vs-divider { font-weight: 900; color: var(--accent-danger); font-style: italic; padding: 0 15px; font-size: 1rem; opacity: 0.8;}
+        .challenge-realtime-status-banner { text-align: center; padding: 8px; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 700; font-family: 'Poppins'; text-transform: uppercase; letter-spacing: 0.5px; }
+        .status-leading { background: rgba(16, 185, 129, 0.1); color: var(--accent-success); }
+        .status-trailing { background: rgba(239, 68, 68, 0.1); color: var(--accent-danger); }
+        .status-tied { background: rgba(245, 158, 11, 0.1); color: var(--accent-warning); }
 
-        /* WhatsApp Style Messenger Layout */
-        .im-messenger-container { display: grid; grid-template-columns: 280px 1fr; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius); height: calc(100vh - 140px); overflow: hidden; box-shadow: var(--shadow-sm); }
-        @media (max-width: 768px) { .im-messenger-container { grid-template-columns: 1fr; } .im-chat-window-pane.hidden-mobile { display: none !important; } }
-        .im-roster-sidebar { border-right: 1px solid var(--border-color); display: flex; flex-direction: column; background: var(--bg-surface); }
-        .im-roster-search-box { padding: 12px; border-bottom: 1px solid var(--border-color); background: var(--input-bg); }
-        .im-roster-list-scroll { flex-grow: 1; overflow-y: auto; }
-        .im-roster-item { display: flex; align-items: center; gap: 12px; padding: 12px 15px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: 0.2s; position: relative;}
+        /* --- REDESIGNED INBOX MESSAGE PAGE (User-Friendly UX) --- */
+        .im-messenger-container { display: grid; grid-template-columns: 340px 1fr; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius); height: calc(100vh - 180px); overflow: hidden; box-shadow: var(--shadow-lg); }
+        @media (max-width: 850px) { .im-messenger-container { grid-template-columns: 1fr; height: calc(100vh - 200px); } .im-chat-window-pane.hidden-mobile { display: none !important; } }
+        
+        .im-roster-sidebar { border-right: 1px solid var(--border-color); display: flex; flex-direction: column; background: var(--bg-surface); z-index: 2;}
+        .im-roster-search-box { padding: 20px; border-bottom: 1px solid var(--border-color); background: var(--bg-surface); display: flex; align-items: center; justify-content: space-between;}
+        .im-roster-list-scroll { flex-grow: 1; overflow-y: auto; padding: 10px 0;}
+        .im-roster-item { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-bottom: 1px solid transparent; cursor: pointer; transition: background 0.2s ease; position: relative;}
         .im-roster-item:hover { background-color: var(--hover-bg); }
-        .im-roster-item.active-chat { background-color: rgba(59, 130, 246, 0.08); border-left: 4px solid var(--primary); }
-        .im-avatar-node { width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; flex-shrink: 0; font-size: 1rem; overflow: hidden; }
+        .im-roster-item.active-chat { background-color: rgba(79, 70, 229, 0.08); border-left: 4px solid var(--primary); }
+        
+        .im-avatar-node { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; flex-shrink: 0; font-size: 1.2rem; overflow: hidden; box-shadow: var(--shadow-sm); border: 2px solid var(--bg-surface);}
         .im-avatar-node img { width: 100%; height: 100%; object-fit: cover; }
+        
         .im-meta-block { flex-grow: 1; min-width: 0; }
-        .im-contact-name-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
-        .im-contact-name { font-weight: 600; font-size: 0.9rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .im-last-msg-preview { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .im-unread-pill { background: var(--accent-danger); color: white; font-size: 0.7rem; font-weight: bold; padding: 2px 6px; border-radius: 10px; position: absolute; right: 15px; bottom: 12px; }
+        .im-contact-name-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .im-contact-name { font-weight: 700; font-size: 0.95rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Poppins';}
+        .im-last-msg-preview { font-size: 0.85rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .im-unread-pill { background: var(--accent-danger); color: white; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 12px; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); box-shadow: 0 2px 5px rgba(239, 68, 68, 0.3);}
         
-        .im-chat-window-pane { display: flex; flex-direction: column; background: var(--input-bg); position: relative; }
-        .im-chat-header-bar { padding: 12px 20px; background: var(--bg-surface); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 12px; }
-        .im-chat-logs-viewport { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-        .im-msg-bubble { max-width: 65%; padding: 10px 14px; border-radius: 14px; font-size: 0.92rem; line-height: 1.4; position: relative; word-wrap: break-word; }
-        .im-msg-bubble.outgoing-node { align-self: flex-end; background: var(--primary); color: white; border-bottom-right-radius: 2px; }
-        .im-msg-bubble.incoming-node { align-self: flex-start; background: var(--bg-surface); color: var(--text-main); border-bottom-left-radius: 2px; border: 1px solid var(--border-color); }
-        .im-msg-timestamp { font-size: 0.68rem; opacity: 0.7; text-align: right; margin-top: 4px; }
-        .im-chat-input-dock { padding: 15px 20px; background: var(--bg-surface); border-top: 1px solid var(--border-color); display: flex; gap: 12px; align-items: center; }
-        .im-chat-input-dock input { flex-grow: 1; }
-        .im-blank-state-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); gap: 10px; font-size: 0.95rem; }
+        .im-chat-window-pane { display: flex; flex-direction: column; background: var(--bg-body); position: relative; }
+        .im-chat-header-bar { padding: 16px 24px; background: var(--bg-surface); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); z-index: 1;}
+        .im-chat-logs-viewport { flex-grow: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background-image: radial-gradient(var(--border-color) 1px, transparent 1px); background-size: 20px 20px; }
+        
+        /* Modern Chat Bubbles */
+        .im-msg-bubble { max-width: 75%; padding: 14px 20px; border-radius: 20px; font-size: 0.95rem; line-height: 1.5; position: relative; word-wrap: break-word; box-shadow: var(--shadow-sm);}
+        .im-msg-bubble.outgoing-node { align-self: flex-end; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%); color: white; border-bottom-right-radius: 4px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);}
+        .im-msg-bubble.incoming-node { align-self: flex-start; background: var(--bg-surface); color: var(--text-main); border-bottom-left-radius: 4px; border: 1px solid var(--border-color); }
+        .im-msg-timestamp { font-size: 0.7rem; opacity: 0.7; text-align: right; margin-top: 6px; font-weight: 500;}
+        
+        /* Floating Chat Input Dock */
+        .im-chat-input-dock { padding: 20px 24px; background: var(--bg-surface); border-top: 1px solid var(--border-color); display: flex; gap: 12px; align-items: center; z-index: 1;}
+        .im-chat-input-dock input { flex-grow: 1; border-radius: 30px; padding: 16px 24px; background: var(--input-bg); border: 1px solid transparent; box-shadow: inset 0 2px 4px rgba(0,0,0,0.03); transition: all 0.3s;}
+        .im-chat-input-dock input:focus { background: var(--bg-surface); border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79,70,229,0.1); outline: none;}
+        
+        .im-chat-input-dock button { border-radius: 50%; width: 52px; height: 52px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-left: 4px; flex-shrink: 0;}
+        .im-blank-state-view { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); gap: 16px; font-size: 1rem; font-weight: 500;}
+        .im-blank-state-view div { background: var(--bg-surface); padding: 16px 24px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);}
+        /* --- END INBOX REDESIGN --- */
 
-        /* Animated VS Layout */
-        .vs-arena-container { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 12px; padding: 30px; display: flex; justify-content: space-around; align-items: center; position: relative; overflow: hidden; margin-bottom: 25px; box-shadow: var(--shadow-md); color: white; }
+        .vs-arena-container { background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); border-radius: var(--radius); padding: 40px; display: flex; justify-content: space-around; align-items: center; position: relative; overflow: hidden; margin-bottom: 24px; box-shadow: var(--shadow-lg); color: white; border: 1px solid rgba(255,255,255,0.1);}
         .vs-fighter-block { display: flex; flex-direction: column; align-items: center; text-align: center; width: 40%; z-index: 2; }
-        .vs-avatar-shield { width: 95px; height: 95px; border-radius: 50%; border: 4px solid #3b82f6; background: #334155; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; font-weight: bold; font-family: 'Poppins'; overflow: hidden; transition: transform 0.3s; animation: pulseGlow 2s infinite ease-in-out; }
+        .vs-avatar-shield { width: 110px; height: 110px; border-radius: 50%; border: 4px solid #6366F1; background: #1E293B; display: flex; justify-content: center; align-items: center; font-size: 3rem; font-weight: bold; font-family: 'Poppins'; overflow: hidden; transition: transform 0.3s; animation: pulseGlow 2.5s infinite ease-in-out; box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);}
         .vs-avatar-shield img { width: 100%; height: 100%; object-fit: cover; }
-        .vs-fighter-block.rival .vs-avatar-shield { border-color: var(--accent-danger); animation-delay: 1s; }
-        .vs-center-badge { font-family: 'Poppins'; font-size: 2.5rem; font-weight: 900; color: #ef4444; font-style: italic; z-index: 2; text-shadow: 0 0 15px rgba(239, 68, 68, 0.6); animation: scaleBeat 1.5s infinite alternate ease-in-out; }
-        .vs-name-lbl { margin-top: 12px; font-size: 1.1rem; font-weight: 700; font-family: 'Poppins'; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .vs-fighter-block.rival .vs-avatar-shield { border-color: #EF4444; animation-delay: 1.25s; box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);}
+        .vs-center-badge { font-family: 'Poppins'; font-size: 3rem; font-weight: 900; color: #EF4444; font-style: italic; z-index: 2; text-shadow: 0 0 20px rgba(239, 68, 68, 0.8); animation: scaleBeat 1.5s infinite alternate ease-in-out; }
+        .vs-name-lbl { margin-top: 16px; font-size: 1.2rem; font-weight: 700; font-family: 'Poppins'; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 2px 4px rgba(0,0,0,0.5);}
 
-        @keyframes pulseGlow {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
-            50% { transform: scale(1.04); box-shadow: 0 0 20px 8px rgba(59, 130, 246, 0.2); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
-        }
-        @keyframes scaleBeat {
-            0% { transform: scale(0.9) rotate(-5deg); }
-            100% { transform: scale(1.1) rotate(5deg); }
-        }
+        @keyframes pulseGlow { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes scaleBeat { 0% { transform: scale(0.9) rotate(-3deg); } 100% { transform: scale(1.1) rotate(3deg); } }
 
-        /* Social Headers */
-        .social-header { display: flex; flex-direction: column; align-items: center; background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%); padding: 40px 20px 30px; border-radius: var(--radius); text-align: center; color: white; box-shadow: var(--shadow-md); margin-bottom: 25px; position: relative;}
-        .avatar-wrapper { width: 110px; height: 110px; border-radius: 50%; background-color: var(--bg-surface); border: 4px solid rgba(255,255,255,0.3); overflow: hidden; display: flex; justify-content: center; align-items: center; font-size: 3rem; margin-bottom: 15px; color: var(--primary); cursor: pointer; position: relative;}
+        .social-header { display: flex; flex-direction: column; align-items: center; background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); padding: 48px 24px 40px; border-radius: var(--radius); text-align: center; color: white; box-shadow: var(--shadow-md); margin-bottom: 24px; position: relative; overflow: hidden;}
+        .avatar-wrapper { width: 120px; height: 120px; border-radius: 50%; background-color: var(--bg-surface); border: 4px solid rgba(255,255,255,0.4); overflow: hidden; display: flex; justify-content: center; align-items: center; font-size: 3.5rem; margin-bottom: 20px; color: var(--primary); cursor: pointer; position: relative; box-shadow: 0 8px 16px rgba(0,0,0,0.2);}
         .avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .avatar-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; opacity: 0; font-size: 0.9rem; color: white;}
+        .avatar-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; opacity: 0; font-size: 1rem; font-weight: 600; color: white; transition: opacity 0.2s;}
         .avatar-wrapper:hover .avatar-overlay { opacity: 1; }
-        .social-stats { display: flex; gap: 30px; margin-top: 20px; width: 100%; justify-content: center; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);}
+        .social-stats { display: flex; gap: 40px; margin-top: 24px; width: 100%; justify-content: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.2);}
         .social-stats .social-stat-item { text-align: center; }
-        .social-stats .social-stat-val { font-size: 1.4rem; font-weight: 700; font-family: 'Poppins'; color: white; }
-        .social-stats .social-stat-lbl { font-size: 0.75rem; opacity: 0.9; text-transform: uppercase; font-weight: 600; color: white; }
+        .social-stats .social-stat-val { font-size: 1.6rem; font-weight: 800; font-family: 'Poppins'; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2);}
+        .social-stats .social-stat-lbl { font-size: 0.8rem; opacity: 0.9; text-transform: uppercase; font-weight: 700; color: white; letter-spacing: 0.5px;}
 
-        /* Timeline */
-        .timeline { margin-top: 10px; max-height: 500px; overflow-y: auto; padding-right: 10px; }
-        .timeline-entry { background-color: var(--bg-surface); border: 1px solid var(--border-color); border-left: 4px solid var(--primary); padding: 18px; margin-bottom: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: flex-start;}
+        .timeline { margin-top: 15px; max-height: 500px; overflow-y: auto; padding-right: 15px; }
+        .timeline-entry { background-color: var(--bg-surface); border: 1px solid var(--border-color); border-left: 5px solid var(--primary); padding: 20px; margin-bottom: 16px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: flex-start; box-shadow: var(--shadow-sm); transition: transform 0.2s;}
+        .timeline-entry:hover { transform: translateX(4px); box-shadow: var(--shadow-md); }
         
-        .streak-container { text-align: center; padding: 20px 15px 10px; }
-        .streak-visual-wheel { width: 160px; height: 160px; border-radius: 50%; border: 8px solid var(--border-color); border-top-color: #ea580c; margin: 0 auto 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative;}
-        .streak-clock-val { font-size: 1.6rem; font-weight: 700; color: var(--text-main); font-family: 'Poppins'; position: relative; z-index: 2;}
-        .streak-clock-lbl { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; position: relative; z-index: 2;}
+        .streak-container { text-align: center; padding: 30px 20px 20px; }
+        .streak-visual-wheel { width: 180px; height: 180px; border-radius: 50%; border: 10px solid var(--border-color); border-top-color: #F59E0B; margin: 0 auto 24px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; box-shadow: inset 0 4px 10px rgba(0,0,0,0.05), 0 8px 20px rgba(0,0,0,0.05);}
+        .streak-clock-val { font-size: 2rem; font-weight: 800; color: var(--text-main); font-family: 'Poppins'; position: relative; z-index: 2; line-height: 1;}
+        .streak-clock-lbl { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; position: relative; z-index: 2; margin-top: 8px;}
 
-        .graph-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px; }
+        .graph-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
         @media (max-width: 800px) { .graph-panel { grid-template-columns: 1fr; } }
-        .chart-box { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; }
-        .chart-box h4 { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px;}
-        .svg-chart { width: 100%; height: 200px; display: block; overflow: visible;}
+        .chart-box { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm);}
+        .chart-box h4 { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .svg-chart { width: 100%; height: 220px; display: block; overflow: visible;}
 
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
-        .modal-overlay.active { display: flex; }
-        .modal-content { background: var(--bg-surface); padding: 25px; border-radius: 12px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border-color); position: relative;}
-        .modal-header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;}
-        .modal-close-btn { background: none; border: none; font-size: 1.8rem; color: var(--text-muted); cursor: pointer; padding: 0; line-height: 1;}
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.2s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-content { background: var(--bg-surface); padding: 32px; border-radius: var(--radius); width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border-color); position: relative; box-shadow: var(--shadow-lg); animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);}
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0;} to { transform: translateY(0); opacity: 1;} }
+        .modal-header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;}
+        .modal-close-btn { background: var(--input-bg); border: 1px solid var(--border-color); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; transition: 0.2s;}
+        .modal-close-btn:hover { background: var(--hover-bg); color: var(--text-main); }
         .hidden { display: none !important; }
+
+        .ypt-timer-display { font-size: 4rem; font-family: 'Poppins'; font-weight: 800; text-align: center; margin: 20px 0; color: var(--primary); letter-spacing: 2px; text-shadow: 0 4px 10px rgba(79, 70, 229, 0.15);}
+        .subject-badge-node { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; color: white; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;}
+        .sub-phy { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%); box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);}
+        .sub-chem { background: linear-gradient(135deg, #10B981 0%, #059669 100%); box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);}
+        .sub-math { background: linear-gradient(135deg, #EC4899 0%, #DB2777 100%); box-shadow: 0 2px 8px rgba(236, 72, 153, 0.4);}
+        .sub-generic { background: linear-gradient(135deg, #64748B 0%, #475569 100%); box-shadow: 0 2px 8px rgba(100, 116, 139, 0.4);}
+        
+        .ypt-grid-insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 24px;}
+        .ypt-metric-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; box-shadow: var(--shadow-sm); transition: transform 0.2s;}
+        .ypt-metric-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .ypt-metric-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--primary); }
+        .ypt-card-phy::after { background: #3B82F6; }
+        .ypt-card-chem::after { background: #10B981; }
+        .ypt-card-math::after { background: #EC4899; }
+        .ypt-metric-card label { margin-bottom: 0; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase; font-weight: 700;}
+        .ypt-metric-card h2 { font-size: 2rem; color: var(--text-main); line-height: 1.2;}
+
+        .ypt-distribution-heatmap { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; margin-top: 20px; background: var(--input-bg); padding: 20px; border-radius: var(--radius-sm); border: 1px solid var(--border-color);}
+        .ypt-heatmap-cell { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-align: center;}
+        .ypt-heatmap-bar-wrapper { width: 100%; height: 120px; background: rgba(0,0,0,0.03); border-radius: 6px; display: flex; align-items: flex-end; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);}
+        .ypt-heatmap-fill { width: 100%; background: var(--primary); border-radius: 6px; transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);}
     </style>
 </head>
 <body data-theme="light">
 
 <div id="auth-screen" class="modal-overlay active" style="background: var(--bg-body); z-index: 2000;">
-    <div class="card" style="width: 100%; max-width: 400px;">
-        <h2 id="auth-title" style="text-align:center; margin-bottom: 20px; color: var(--primary);">Enter the Arena</h2>
+    <div class="card" style="width: 100%; max-width: 420px; padding: 40px 30px; box-shadow: var(--shadow-lg);">
+        <h2 id="auth-title" style="text-align:center; margin-bottom: 30px; color: var(--primary); font-size: 1.8rem;">Enter the Arena</h2>
         <div class="form-group" id="username-group">
             <label>Student Name</label>
             <input type="text" id="auth-username" placeholder="e.g. Rahul Kumar">
@@ -250,10 +310,10 @@
                 <input type="password" id="auth-password" placeholder="••••••••">
             </div>
         </div>
-        <button id="auth-action-btn" onclick="handleAuth()">Login</button>
-        <button class="btn-alt" style="margin-top:10px;" id="btn-toggle" onclick="toggleAuthMode()">Create Account</button>
-        <div style="text-align:center; margin:15px 0; color:var(--text-muted); font-size:0.85rem;">OR</div>
-        <button class="btn-alt" style="border-color:var(--text-muted); color:var(--text-muted);" onclick="handleGuestLogin()">Enter as Guest</button>
+        <button id="auth-action-btn" onclick="handleAuth()" style="margin-top: 10px; padding: 14px;">Login</button>
+        <button class="btn-alt" style="margin-top:15px;" id="btn-toggle" onclick="toggleAuthMode()">Create Account</button>
+        <div style="text-align:center; margin:20px 0; color:var(--text-muted); font-size:0.85rem; font-weight:600; text-transform:uppercase;">Or</div>
+        <button class="btn-alt" style="border-color:var(--border-color); color:var(--text-muted);" onclick="handleGuestLogin()">Enter as Guest</button>
     </div>
 </div>
 
@@ -269,15 +329,15 @@
         <button class="tab-btn active" id="tab-btn-arena" onclick="switchTab('arena')">🏆 Home Benchmarks</button>
         <button class="tab-btn" id="tab-btn-warroom" onclick="switchTab('warroom')">⚔️ Private War Room</button>
         <button class="tab-btn" id="tab-btn-inbox" onclick="switchTab('inbox')">💬 Squad Messenger</button>
-        <button class="tab-btn" id="tab-btn-logger" onclick="switchTab('logger')">⚡ Log Work Cycle</button>
+        <button class="tab-btn" id="tab-btn-logger" onclick="switchTab('logger')">⏱️ Manual Backup</button>
         <button class="tab-btn" id="tab-btn-streaks" onclick="switchTab('streaks')">🔥 Streak Monitor</button>
         <button class="tab-btn" id="tab-btn-profile" onclick="switchTab('profile')">👤 My Profile</button>
         <button class="tab-btn" id="tab-btn-insights" onclick="switchTab('insights')">📊 Matrix Analytics</button>
     </div>
 
     <div class="sidebar-footer">
-        <span id="cloud-status" class="cloud-status synced">🟢 Synced</span>
-        <button class="btn-danger btn-small" onclick="logout()" style="width: 100%; margin-top: 15px;">Logout</button>
+        <span id="cloud-status" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); display:flex; align-items:center; gap:6px;">🟢 Synced</span>
+        <button class="btn-alt" onclick="logout()" style="width: 100%; margin-top: 15px; border-color: var(--border-color);">Logout</button>
     </div>
 </nav>
 
@@ -285,21 +345,20 @@
     <header class="top-app-bar">
         <div class="header-left">
             <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
-            <h2 class="page-title" id="page-title">Squad Arena Dashboard</h2>
+            <h2 class="page-title" id="page-title">Squad Benchmarks & Standings</h2>
         </div>
         <div class="header-right">
-            <!-- UNIFIED REAL-TIME NOTIFICATION HUB BAR -->
             <button class="noti-btn" onclick="toggleNotificationTray()">
                 🔔 Notis <span class="noti-badge" id="noti-badge-count">0</span>
             </button>
             <div class="noti-dropdown" id="notification-tray">
                 <div class="noti-section-title">Pending Action Sprints</div>
                 <div id="noti-challenges-container">
-                    <div style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding: 8px 0;">No pending challenge requests.</div>
+                    <div style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding: 12px 0;">No pending challenge requests.</div>
                 </div>
                 <div class="noti-section-title" style="margin-top: 10px;">Unread Roster Alerts</div>
                 <div id="noti-messages-container">
-                    <div style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding: 8px 0;">No unread text messages.</div>
+                    <div style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding: 12px 0;">No unread text messages.</div>
                 </div>
             </div>
             
@@ -312,28 +371,73 @@
             
             <!-- TAB AREA: HOME DASHBOARD & LEADERBOARD -->
             <div id="tab-arena" class="tab-content">
-                <div class="card">
-                    <h3 style="border:none; margin-bottom:15px;">Squad Benchmarks & Standings</h3>
-                    <div class="filter-tabs">
-                        <button class="filter-tab-btn active" id="lb-filter-today" onclick="setLeaderboardTimelineFilter('today')">Today</button>
-                        <button class="filter-tab-btn" id="lb-filter-weekly" onclick="setLeaderboardTimelineFilter('weekly')">Weekly</button>
-                        <button class="filter-tab-btn" id="lb-filter-monthly" onclick="setLeaderboardTimelineFilter('monthly')">Monthly</button>
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <div style="padding: 24px 24px 16px; border-bottom: 1px solid var(--border-color); background: var(--bg-surface);">
+                        <h3 style="border:none; margin-bottom:16px;">Squad Benchmarks & Standings</h3>
+                        <div class="filter-tabs" style="margin-bottom:0;">
+                            <button class="filter-tab-btn active" id="lb-filter-today" onclick="setLeaderboardTimelineFilter('today')">Today</button>
+                            <button class="filter-tab-btn" id="lb-filter-weekly" onclick="setLeaderboardTimelineFilter('weekly')">Weekly</button>
+                            <button class="filter-tab-btn" id="lb-filter-monthly" onclick="setLeaderboardTimelineFilter('monthly')">Monthly</button>
+                        </div>
                     </div>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Aspirant</th>
-                                <th id="lb-metric-header">Today's Pts</th>
-                                <th>Lifetime Pts</th>
-                                <th>Streak</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leaderboard-body">
-                            <tr><td colspan="5" style="text-align:center; color:var(--text-muted);">Loading Squad Database Stream...</td></tr>
-                        </tbody>
-                    </table>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="padding-left: 24px;">Rank</th>
+                                    <th>Aspirant</th>
+                                    <th id="lb-metric-header">Today's Pts</th>
+                                    <th>Lifetime Pts</th>
+                                    <th style="padding-right: 24px;">Streak</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboard-body">
+                                <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding: 30px;">Loading Squad Database Stream...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; margin-top: 24px;">
+                    <div class="card" style="border: 2px solid var(--primary); margin-bottom: 0; box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1);">
+                        <h3>⏱️ YPT Real-Time Stopwatch</h3>
+                        <div class="form-group" style="margin-top:15px;">
+                            <label>Target Stream Subject</label>
+                            <div style="display: flex; gap: 12px; margin-bottom: 10px;">
+                                <select id="timer-subject-select" style="flex: 1;">
+                                    <option value="physics">📚 Physics</option>
+                                    <option value="chemistry">🧪 Chemistry</option>
+                                    <option value="maths">📐 Mathematics</option>
+                                    <option value="general">📝 Mock Test / General Study</option>
+                                </select>
+                                <button class="btn-alt btn-small" onclick="triggerCustomSubjectModal()" style="width: auto;">+ Custom</button>
+                            </div>
+                        </div>
+                        
+                        <div class="ypt-timer-display" id="ypt-stopwatch-label">00:00:00</div>
+                        
+                        <div style="display:flex; gap:12px;">
+                            <button class="btn-success" id="btn-timer-start" onclick="startYptLiveTimer()">▶️ Start Session</button>
+                            <button class="btn-alt" style="color:var(--accent-warning); border-color:var(--accent-warning);" id="btn-timer-pause" onclick="pauseYptLiveTimer()" disabled>⏸️ Pause</button>
+                            <button class="btn-danger" id="btn-timer-stop" onclick="stopAndLogYptLiveTimer()" disabled>⏹️ End & Save</button>
+                        </div>
+                    </div>
+
+                    <div class="card" style="height: 100%; margin-bottom: 0; display: flex; flex-direction: column;">
+                        <h3 style="color: var(--primary); border:none; margin-bottom:5px;">⏳ Engine Core Metrics</h3>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; text-align:center; margin:20px 0; flex-grow: 1;">
+                            <div style="background:var(--input-bg); padding:20px; border-radius:var(--radius-sm); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: center;">
+                                <div style="font-size:2rem; font-weight:800; color:var(--primary); font-family: 'Poppins';" id="log-hours-val">0.0</div>
+                                <div style="font-size:0.8rem; color:var(--text-muted); font-weight: 600; text-transform: uppercase;">Today's Hours</div>
+                            </div>
+                            <div style="background:var(--input-bg); padding:20px; border-radius:var(--radius-sm); border: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: center;">
+                                <div style="font-size:2rem; font-weight:800; color:var(--primary); font-family: 'Poppins';" id="log-points-val">0</div>
+                                <div style="font-size:0.8rem; color:var(--text-muted); font-weight: 600; text-transform: uppercase;">Today's Points</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0; line-height: 1.5; text-align: center;">Reaching <strong style="color:var(--text-main);">10.0+ hours</strong> secures your active streak mapping.</p>
+                    </div>
                 </div>
             </div>
 
@@ -353,7 +457,7 @@
 
                 <div class="card">
                     <h3>Configure Accountability Challenge</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; align-items: end;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; align-items: end;">
                         <div class="form-group" style="margin-bottom:0;">
                             <label>Target Rival Name</label>
                             <select id="warroom-rival-select" onchange="loadWarRoomRivalData()">
@@ -376,17 +480,17 @@
                 <div class="card" style="border-color: var(--primary);">
                     <h3 style="color: var(--primary);">⚔️ Active Accountability Matrix Grid</h3>
                     <div class="challenge-grid" id="challenge-cards-viewport">
-                        <div style="color:var(--text-muted); font-size:0.9rem; padding: 20px 0; text-align:center; grid-column: 1/-1;">No concurrent sprints active. Select a target squad member above to launch.</div>
+                        <div style="color:var(--text-muted); font-size:0.95rem; padding: 30px 0; text-align:center; grid-column: 1/-1;">No concurrent sprints active. Select a target squad member above to launch.</div>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB AREA: WHATSAPP STYLE MESSENGER HUB -->
+            <!-- TAB AREA: WHATSAPP STYLE MESSENGER HUB (Redesigned) -->
             <div id="tab-inbox" class="tab-content hidden">
                 <div class="im-messenger-container">
                     <div class="im-roster-sidebar">
                         <div class="im-roster-search-box">
-                            <div style="font-weight:700; font-size:1rem; color:var(--text-main);">Squad Roster</div>
+                            <div style="font-weight:800; font-size:1.1rem; font-family:'Poppins'; color:var(--text-main);">Squad Roster</div>
                         </div>
                         <div class="im-roster-list-scroll" id="im-roster-viewport">
                             <!-- Populated dynamically via active users stream -->
@@ -394,98 +498,82 @@
                     </div>
                     <div class="im-chat-window-pane" id="im-chat-pane">
                         <div class="im-blank-state-view" id="im-blank-state">
-                            <span>💬 Select an aspirant from the sidebar roster to engage in a sync session.</span>
+                            <div>💬 Select an aspirant from the sidebar roster to engage in a sync session.</div>
                         </div>
                         <div class="im-chat-header-bar hidden" id="im-chat-header">
                             <div class="im-avatar-node" id="im-header-avatar">?</div>
                             <div>
-                                <div class="im-contact-name" id="im-header-name">Target User</div>
-                                <div style="font-size:0.75rem; color:var(--accent-success);">● Connected Stream</div>
+                                <div class="im-contact-name" id="im-header-name" style="font-size: 1.05rem;">Target User</div>
+                                <div style="font-size:0.75rem; color:var(--accent-success); font-weight:600; margin-top:2px;">● Connected Stream</div>
                             </div>
                         </div>
                         <div class="im-chat-logs-viewport hidden" id="im-chat-logs">
                             <!-- Messages generated dynamically -->
                         </div>
                         <div class="im-chat-input-dock hidden" id="im-chat-input-row">
-                            <input type="text" id="im-chat-input-field" placeholder="Type an accountability message..." onkeypress="if(event.key === 'Enter') sendRosterMessage()">
-                            <button onclick="sendRosterMessage()" style="width:auto; padding:0 25px;">Send</button>
+                            <input type="text" id="im-chat-input-field" placeholder="Message..." onkeypress="if(event.key === 'Enter') sendRosterMessage()">
+                            <!-- Updated to icon for a modern messaging feel -->
+                            <button onclick="sendRosterMessage()" title="Send">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB AREA: DATA LOGGER -->
+            <!-- TAB AREA: MANUAL ENTRY BACKUP LOG ONLY -->
             <div id="tab-logger" class="tab-content hidden">
-                <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 25px;">
-                    <div class="card">
-                        <h3>Log Active Study Session</h3>
-                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:20px; text-align:center;">
-                            <div style="background:var(--input-bg); padding:12px; border-radius:8px; border: 1px solid var(--border-color);">
-                                <div style="font-size:1.4rem; font-weight:bold; color:var(--primary);" id="log-hours-val">0.0</div>
-                                <div style="font-size:0.75rem; color:var(--text-muted);">Today's Hours</div>
-                            </div>
-                            <div style="background:var(--input-bg); padding:12px; border-radius:8px; border: 1px solid var(--border-color);">
-                                <div style="font-size:1.4rem; font-weight:bold; color:var(--primary);" id="log-points-val">0</div>
-                                <div style="font-size:0.75rem; color:var(--text-muted);">Accumulated Points</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Session Classification</label>
-                            <select id="session-type">
-                                <option value="focus">Theory / Practice</option>
-                                <option value="test">Mock Test</option>
-                            </select>
-                        </div>
-
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                            <div class="form-group">
-                                <label>⏱️ Total Study (Hours)</label>
-                                <input type="number" id="session-total-hours" min="0.1" step="0.1" value="2.0">
-                            </div>
-                            <div class="form-group">
-                                <label>🧠 Max Focus (Minutes)</label>
-                                <input type="number" id="session-max-focus" min="1" step="1" value="60">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Upload Proof Element</label>
-                            <input type="file" id="session-proof" accept="image/*">
-                        </div>
-                        <button onclick="logSession()">Submit Log Entry</button>
+                <div class="card" style="max-width: 600px; margin: 0 auto; padding: 32px;">
+                    <h3 style="margin-bottom: 30px;">Log Manual Session Backup</h3>
+                    <div class="form-group">
+                        <label>Subject Classification</label>
+                        <select id="session-type">
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="maths">Mathematics</option>
+                            <option value="general">General Study</option>
+                            <option value="test">Mock Test Data</option>
+                        </select>
                     </div>
 
-                    <div>
-                        <div class="card" style="border-color: var(--primary);">
-                            <h3 style="color: var(--primary); margin-bottom:5px; border:none;">⏳ Autonomous Cycle Sync</h3>
-                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">The platform automatically wraps your study matrix every day precisely at <strong>12:00 AM Midnight</strong>.</p>
-                            <div style="padding: 12px; background: var(--hover-bg); border-radius: 8px; font-size: 0.85rem; border: 1px solid var(--border-color);">
-                                <span style="font-weight: 600; color: var(--text-main);">Cycle Rule:</span> Reaching <strong>10.0+ hours</strong> before midnight extends your consecutive engine streak by +1.
-                            </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label>⏱️ Study Duration (Hours)</label>
+                            <input type="number" id="session-total-hours" min="0.1" step="0.1" value="2.0">
+                        </div>
+                        <div class="form-group">
+                            <label>🧠 Max Focus (Minutes)</label>
+                            <input type="number" id="session-max-focus" min="1" step="1" value="60">
                         </div>
                     </div>
+
+                    <div class="form-group" style="margin-bottom: 30px;">
+                        <label>Upload Proof Element (Max 1 MB)</label>
+                        <input type="file" id="session-proof" accept="image/*" style="padding: 10px;">
+                    </div>
+                    <button onclick="logSession()" style="padding: 14px; font-size: 1rem;">Submit Manual Entry</button>
                 </div>
             </div>
 
             <!-- TAB AREA: STREAKS ENGINE -->
             <div id="tab-streaks" class="tab-content hidden">
-                <div class="card">
-                    <h3>Goal Progress Terminal & Analytics</h3>
+                <div class="card" style="padding: 40px 24px;">
+                    <h3 style="text-align: center; justify-content: center; margin-bottom: 30px; font-size: 1.4rem;">Goal Progress Terminal</h3>
                     <div class="streak-container">
                         <div class="streak-visual-wheel" id="streak-wheel-box">
                             <div class="streak-clock-val" id="streak-live-hours">0.0h</div>
                             <div class="streak-clock-lbl" id="streak-status-lbl">Pending</div>
                         </div>
-                        <h2 style="font-size: 1.5rem; margin-bottom: 8px;" id="streak-title-msg">Keep Pushing!</h2>
-                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;" id="streak-sub-msg">You require 10.0 hours more to retain your streak.</p>
+                        <h2 style="font-size: 1.8rem; margin-bottom: 12px; font-weight: 800;" id="streak-title-msg">Keep Pushing!</h2>
+                        <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 30px; max-width: 400px; margin-left: auto; margin-right: auto; line-height: 1.5;" id="streak-sub-msg">You require 10.0 hours more to retain your streak.</p>
                     </div>
 
-                    <div class="warroom-split-dashboard" style="margin-top: 10px;">
-                        <div class="warroom-stat-card" style="border-top: 4px solid var(--accent-warning);">
+                    <div class="warroom-split-dashboard">
+                        <div class="warroom-stat-card" style="border-top: 5px solid var(--accent-warning);">
                             <div class="warroom-metric-label">🔥 Highest Streak Achieved</div>
-                            <div class="warroom-metric-value" id="streak-metric-highest" style="color: #ea580c;">0 days</div>
+                            <div class="warroom-metric-value" id="streak-metric-highest" style="color: #D97706;">0 days</div>
                         </div>
-                        <div class="warroom-stat-card" style="border-top: 4px solid var(--primary);">
+                        <div class="warroom-stat-card" style="border-top: 5px solid var(--primary);">
                             <div class="warroom-metric-label">📆 Days in Current Streak</div>
                             <div class="warroom-metric-value" id="streak-metric-current" style="color: var(--primary);">0 days</div>
                         </div>
@@ -496,16 +584,16 @@
             <!-- TAB AREA: PROFILE -->
             <div id="tab-profile" class="tab-content hidden">
                 <div class="social-header">
-                    <button class="btn-danger btn-small" style="position: absolute; top: 15px; right: 15px; border-color: rgba(255,255,255,0.4); color: white;" onclick="logout()">🚪 Sign Out</button>
+                    <button class="btn-alt btn-small" style="position: absolute; top: 20px; right: 20px; border-color: rgba(255,255,255,0.4); color: white; background: rgba(0,0,0,0.1);" onclick="logout()">🚪 Sign Out</button>
                     
                     <input type="file" id="profile-pic-upload" accept="image/*" class="hidden" onchange="uploadProfilePic(event)">
                     <div class="avatar-wrapper" onclick="document.getElementById('profile-pic-upload').click()">
                         <div id="my-avatar-content">🏆</div>
                         <div class="avatar-overlay">Upload</div>
                     </div>
-                    <h2 id="my-profile-name" style="margin-bottom: 10px;">Loading...</h2>
-                    <input type="text" id="profile-bio" placeholder="Grinding concepts..." onblur="updateProfileMeta()" style="background:rgba(255,255,255,0.1); border:none; color:white; text-align:center; max-width:300px; margin-bottom:5px;">
-                    <input type="text" id="profile-exam" value="JEE 2027" onblur="updateProfileMeta()" style="background:rgba(255,255,255,0.1); border:none; color:white; text-align:center; max-width:150px;">
+                    <h2 id="my-profile-name" style="margin-bottom: 12px; font-size: 2rem;">Loading...</h2>
+                    <input type="text" id="profile-bio" placeholder="Grinding concepts..." onblur="updateProfileMeta()" style="background:rgba(0,0,0,0.15); border:1px solid rgba(255,255,255,0.1); color:white; text-align:center; max-width:350px; margin-bottom:10px; border-radius: 20px;">
+                    <input type="text" id="profile-exam" value="JEE 2027" onblur="updateProfileMeta()" style="background:rgba(0,0,0,0.15); border:1px solid rgba(255,255,255,0.1); color:white; text-align:center; max-width:180px; border-radius: 20px; font-weight: 700;">
                     
                     <div class="social-stats">
                         <div class="social-stat-item"><div class="social-stat-val" id="my-stat-points">0</div><div class="social-stat-lbl">Lifetime Pts</div></div>
@@ -514,55 +602,97 @@
                     </div>
                 </div>
                 <div class="card">
-                    <h3>My Logbook</h3>
+                    <h3 style="margin-bottom: 24px;">My Logbook</h3>
                     <div class="timeline" id="timeline-feed"></div>
                 </div>
             </div>
 
             <!-- TAB AREA: EXTENDED ASPIRANT VIEW -->
             <div id="tab-public-full" class="tab-content hidden">
-                <button class="btn-alt btn-small" onclick="switchTab('arena')" style="margin-bottom: 15px;">← Back to Main Dashboard</button>
+                <button class="btn-alt btn-small" onclick="switchTab('arena')" style="margin-bottom: 20px;">← Back to Main Dashboard</button>
                 <div class="social-header">
                     <div class="avatar-wrapper" id="full-avatar-wrapper" style="cursor: default;">
                         <div id="full-avatar-content">👤</div>
                     </div>
-                    <h2 id="full-profile-name" style="margin-bottom: 5px;">User Name</h2>
-                    <div style="font-size: 0.95rem; opacity:0.9;" id="full-profile-bio">Bio goes here</div>
-                    <div style="font-size: 0.85rem; margin-top: 5px; font-weight:700;" id="full-profile-exam">JEE 2027</div>
+                    <h2 id="full-profile-name" style="margin-bottom: 8px; font-size: 2rem;">User Name</h2>
+                    <div style="font-size: 1rem; opacity:0.9; margin-bottom: 8px;" id="full-profile-bio">Bio goes here</div>
+                    <div style="font-size: 0.85rem; font-weight:800; background:rgba(0,0,0,0.2); padding: 4px 12px; border-radius: 12px;" id="full-profile-exam">JEE 2027</div>
                     
                     <div class="social-stats">
                         <div class="social-stat-item"><div class="social-stat-val" id="full-stat-points">0</div><div class="social-stat-lbl">Lifetime Pts</div></div>
                         <div class="social-stat-item"><div class="social-stat-val" id="full-stat-streak">0🔥</div><div class="social-stat-lbl">Streak</div></div>
                     </div>
-                    <button class="btn-success" id="btn-message-full" style="background:white; color:var(--primary); max-width:200px; margin-top:20px;">💬 Chat with Aspirant</button>
+                    <button class="btn-success" id="btn-message-full" style="background:white; color:var(--primary); max-width:240px; margin-top:30px; border-radius: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">💬 Message Aspirant</button>
                 </div>
                 <div class="card">
-                    <h3>Aspirant Logbook</h3>
+                    <h3 style="margin-bottom: 24px;">Aspirant Logbook</h3>
                     <div class="timeline" id="full-timeline-feed"></div>
                 </div>
             </div>
 
             <!-- TAB AREA: INSIGHTS GENERATION ENGINE -->
             <div id="tab-insights" class="tab-content hidden">
-                <div class="card" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; text-align:center; margin-bottom:20px;">
-                    <div style="padding:20px; background:var(--input-bg); border-radius:8px; border:1px solid var(--border-color)">
-                        <div style="font-size:0.8rem; color:var(--text-muted); font-weight:bold;">TEST:STUDY RATIO</div>
-                        <div style="font-size:2rem; font-weight:bold; color:var(--primary);" id="insight-ts-ratio">0.0</div>
+                <!-- MATRIX FILTERS & NAVIGATION SYSTEM -->
+                <div class="card" style="padding: 24px 24px 10px;">
+                    <label style="margin-bottom: 12px; font-size: 0.9rem;">Timeline Interval Partition</label>
+                    <div class="filter-tabs">
+                        <button class="filter-tab-btn active" id="insights-time-daily" onclick="setInsightsTimeline('daily')">Daily Logs</button>
+                        <button class="filter-tab-btn" id="insights-time-weekly" onclick="setInsightsTimeline('weekly')">Weekly Sums</button>
+                        <button class="filter-tab-btn" id="insights-time-monthly" onclick="setInsightsTimeline('monthly')">Monthly Sums</button>
                     </div>
-                    <div style="padding:20px; background:var(--input-bg); border-radius:8px; border:1px solid var(--border-color)">
-                        <div style="font-size:0.8rem; color:var(--text-muted); font-weight:bold;">FOCUS PENALTY RATIO</div>
-                        <div style="font-size:2rem; font-weight:bold; color:var(--accent-danger);" id="insight-friction-index">0%</div>
+
+                    <label style="margin-bottom: 12px; font-size: 0.9rem; margin-top: 10px;">Subject Axis Filtration</label>
+                    <div class="filter-tabs" id="insights-subject-tabs-container">
+                        <button class="filter-tab-btn active" onclick="setInsightsSubject('all')">All Metrics</button>
+                        <button class="filter-tab-btn" onclick="setInsightsSubject('physics')">Physics</button>
+                        <button class="filter-tab-btn" onclick="setInsightsSubject('chemistry')">Chemistry</button>
+                        <button class="filter-tab-btn" onclick="setInsightsSubject('maths')">Mathematics</button>
+                        <button class="filter-tab-btn" onclick="setInsightsSubject('general')">General</button>
+                    </div>
+
+                    <div class="pagination-row" style="margin-top: 15px;">
+                        <button class="btn-alt btn-small" onclick="navigateInsightsOffset(-1)" style="width:auto; padding: 8px 16px;">◀ Previous</button>
+                        <span class="pagination-label" id="insights-pagination-label">Window Frame Tracking</span>
+                        <button class="btn-alt btn-small" onclick="navigateInsightsOffset(1)" style="width:auto; padding: 8px 16px;">Next ▶</button>
+                    </div>
+                </div>
+
+                <!-- YPT SUMMARY DEEP SPLIT CARDS -->
+                <div class="ypt-grid-insights">
+                    <div class="ypt-metric-card ypt-card-phy">
+                        <label>📘 Physics Engine Tracker</label>
+                        <h2 id="ypt-hours-phy" style="font-family:'Poppins'">0.0 hrs</h2>
+                    </div>
+                    <div class="ypt-metric-card ypt-card-chem">
+                        <label>🧪 Chemistry Engine Tracker</label>
+                        <h2 id="ypt-hours-chem" style="font-family:'Poppins'">0.0 hrs</h2>
+                    </div>
+                    <div class="ypt-metric-card ypt-card-math">
+                        <label>📐 Mathematics Focus</label>
+                        <h2 id="ypt-hours-math" style="font-family:'Poppins'">0.0 hrs</h2>
+                    </div>
+                    <div class="ypt-metric-card" style="border-top: 4px solid var(--text-muted); border-left: none;">
+                        <label>📝 General / Test Allocation</label>
+                        <h2 id="ypt-hours-tests" style="font-family:'Poppins'">0.0 hrs</h2>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 style="margin-bottom: 8px;">📊 YPT Weekly Consistency Heatmap</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom:15px; font-weight: 500;">Chronological hour metrics mapped across consecutive submission frames.</p>
+                    <div class="ypt-distribution-heatmap" id="ypt-heatmap-viewport">
+                        <!-- Filled dynamically -->
                     </div>
                 </div>
                 
                 <div class="graph-panel">
                     <div class="chart-box">
-                        <h4>Daily Study Distribution (Last 7 Logs)</h4>
-                        <svg class="svg-chart" id="study-hours-svg" viewBox="0 0 400 200"></svg>
+                        <h4 id="insights-chart1-title">Study Distribution Profile</h4>
+                        <svg class="svg-chart" id="study-hours-svg" viewBox="0 0 400 220"></svg>
                     </div>
                     <div class="chart-box">
-                        <h4>Daily Points Yield Profile (Last 7 Logs)</h4>
-                        <svg class="svg-chart" id="study-points-svg" viewBox="0 0 400 200"></svg>
+                        <h4 id="insights-chart2-title">Points Yield Profile</h4>
+                        <svg class="svg-chart" id="study-points-svg" viewBox="0 0 400 220"></svg>
                     </div>
                 </div>
             </div>
@@ -572,43 +702,69 @@
 </div>
 
 <!-- QUICK PROFILE MODALS -->
-<div class="modal-overlay" id="public-profile-modal">
-    <div class="modal-content" style="padding: 20px;">
+<div class="modal-overlay" id="public-profile-modal" onclick="if(event.target === this) closeModal('public-profile-modal')">
+    <div class="modal-content" style="padding: 24px;">
         <div class="modal-header-actions">
-            <button class="btn-alt btn-small" id="btn-open-full-page">Expand Full Page</button>
+            <button class="btn-alt btn-small" id="btn-open-full-page" style="font-weight: 600;">Expand Full Page</button>
             <button class="modal-close-btn" onclick="closeModal('public-profile-modal')">×</button>
         </div>
-        <div style="text-align: center; margin-bottom: 20px;">
-            <div class="avatar-wrapper" style="margin: 0 auto 15px; width:80px; height:80px; font-size:2rem;" id="quick-avatar-wrapper">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <div class="avatar-wrapper" style="margin: 0 auto 16px; width:90px; height:90px; font-size:2.5rem; box-shadow: var(--shadow-sm);" id="quick-avatar-wrapper">
                 <div id="quick-avatar-content">👤</div>
             </div>
-            <h2 id="quick-profile-name" style="margin-bottom:5px;">User Name</h2>
-            <div style="color:var(--text-muted); font-size: 0.9rem;" id="quick-profile-bio">Bio</div>
+            <h2 id="quick-profile-name" style="margin-bottom:8px; font-size:1.4rem;">User Name</h2>
+            <div style="color:var(--text-muted); font-size: 0.95rem; line-height:1.4;" id="quick-profile-bio">Bio</div>
         </div>
-        <div style="display:flex; justify-content:space-around; background:var(--input-bg); padding:15px; border-radius:8px; border:1px solid var(--border-color);">
+        <div style="display:flex; justify-content:space-around; background:var(--input-bg); padding:20px; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
             <div style="text-align:center;">
-                <div style="font-size:1.2rem; font-weight:bold; color:var(--primary);" id="quick-stat-points">0</div>
-                <div style="font-size:0.75rem; color:var(--text-muted);">Points</div>
+                <div style="font-size:1.5rem; font-weight:800; color:var(--primary); font-family: 'Poppins';" id="quick-stat-points">0</div>
+                <div style="font-size:0.75rem; color:var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top:4px;">Points</div>
             </div>
             <div style="text-align:center;">
-                <div style="font-size:1.2rem; font-weight:bold; color:#ea580c;" id="quick-stat-streak">0🔥</div>
-                <div style="font-size:0.75rem; color:var(--text-muted);">Streak</div>
+                <div style="font-size:1.5rem; font-weight:800; color:#D97706; font-family: 'Poppins';" id="quick-stat-streak">0🔥</div>
+                <div style="font-size:0.75rem; color:var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top:4px;">Streak</div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- CUSTOM SUBJECT ADDITION MODAL -->
+<div class="modal-overlay" id="custom-subject-modal" onclick="if(event.target === this) closeModal('custom-subject-modal')">
+    <div class="modal-content" style="max-width: 420px; padding: 32px;">
+        <div class="modal-header-actions" style="margin-bottom: 24px;">
+            <h3 style="border:none; margin:0; padding:0; font-size:1.3rem;">Add Custom Subject</h3>
+            <button class="modal-close-btn" onclick="closeModal('custom-subject-modal')">×</button>
+        </div>
+        <div class="form-group" style="margin-bottom: 24px;">
+            <label>Subject Label / Branch</label>
+            <input type="text" id="custom-subject-input" placeholder="e.g. Organic Chemistry, Calculus">
+        </div>
+        <button class="btn-success" onclick="saveCustomSubjectNode()" style="padding: 14px;">Inject into Engine Selectors</button>
     </div>
 </div>
 
 <div class="modal-overlay" id="image-viewer-modal" onclick="if(event.target === this) closeModal('image-viewer-modal')">
     <div class="modal-content" style="background:transparent; border:none; box-shadow:none; text-align:center;">
-        <button class="modal-close-btn" onclick="closeModal('image-viewer-modal')" style="background:rgba(255,255,255,0.2); width:40px; height:40px; border-radius:50%; color:white; position:absolute; right:0; top:-40px;">×</button>
-        <img id="viewer-img" src="" style="max-width:100%; max-height:85vh; border-radius:8px;">
+        <button class="modal-close-btn" onclick="closeModal('image-viewer-modal')" style="background:rgba(255,255,255,0.2); width:40px; height:40px; border-radius:50%; color:white; position:absolute; right:0; top:-50px; border:1px solid rgba(255,255,255,0.4);">×</button>
+        <img id="viewer-img" src="" style="max-width:100%; max-height:85vh; border-radius:var(--radius); box-shadow: var(--shadow-lg);">
     </div>
 </div>
+
+<!-- PWA Service Worker Registration -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js')
+        .then(registration => console.log('ServiceWorker registration successful'))
+        .catch(err => console.log('ServiceWorker registration failed: ', err));
+    });
+  }
+</script>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc, deleteDoc, onSnapshot, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, addDoc, deleteDoc, onSnapshot, query, orderBy, limit, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyBQYrFSEF__fmx1hh3Ebgsi7SHtny5sB3E",
@@ -627,9 +783,23 @@
     let cachedGlobalUsers = [];
     let activeRosterChatUid = null;
     let cachedLogsForCharts = [];
+    
     let leaderboardTimelineFilter = 'today'; 
     
-    let timelineUnsubscribe = null, chatUnsubscribe = null, globalLeaderboardUnsubscribe = null, challengesUnsubscribe = null, notiChallengesUnsub = null, notiMessagesUnsub = null;
+    let insightsTimeFilter = 'daily'; 
+    let insightsSubjectFilter = 'all'; 
+    let insightsPageOffset = 0;        
+
+    let yptTimerRef = null;
+    let yptAccumulatedSeconds = 0;
+    let yptIsRunning = false;
+
+    let timelineUnsubscribe = null, chatUnsubscribe = null, globalLeaderboardUnsubscribe = null, challengesUnsubscribe = null, notiChallengesUnsub = null;
+    
+    let activeIncomingChallengesCount = 0;
+    let activeIncomingMessagesCount = 0;
+    let chatListeners = {};
+    let latestChatMessages = {};
 
     function num(v) {
         const n = Number(v);
@@ -645,28 +815,35 @@
 
     function processImage(file) {
         return new Promise((resolve, reject) => {
-            const TARGET_SIZE_BYTES = 250 * 1024;
+            const MAX_ALLOWED_BYTES = 1024 * 1024; 
+            const TARGET_SIZE_BYTES = 800 * 1024;  
+            
+            if (file.size > MAX_ALLOWED_BYTES) {
+                return reject(new Error("Image sizes must not pass the 1 MB allocation limit."));
+            }
+
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = event => {
                 const dataUrl = event.target.result;
                 if (file.size <= TARGET_SIZE_BYTES) return resolve(dataUrl);
+                
                 const img = new Image();
                 img.src = dataUrl;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 800; const MAX_HEIGHT = 800;
+                    const MAX_WIDTH = 1200; const MAX_HEIGHT = 1200; 
                     let width = img.width, height = img.height;
                     if (width > height) { if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; } } 
                     else { if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; } }
                     canvas.width = width; canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    let quality = 0.9;
+                    let quality = 0.85;
                     let compressedBase64 = canvas.toDataURL('image/jpeg', quality);
                     let currentSizeBytes = Math.round(compressedBase64.length * 0.75);
                     while (currentSizeBytes > TARGET_SIZE_BYTES && quality > 0.1) {
-                        quality -= 0.1;
+                        quality -= 0.05;
                         compressedBase64 = canvas.toDataURL('image/jpeg', quality);
                         currentSizeBytes = Math.round(compressedBase64.length * 0.75);
                     }
@@ -676,6 +853,156 @@
             };
             reader.onerror = e => reject(e);
         });
+    }
+
+    async function runClientSideImageScrubber(uid) {
+        try {
+            const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+            const logsRef = collection(db, `users/${uid}/logs`);
+            const oldLogsQuery = query(logsRef, where("timestamp", "<", thirtyDaysAgo));
+            const snapshot = await getDocs(oldLogsQuery);
+            
+            snapshot.forEach(async (docSnap) => {
+                const logData = docSnap.data();
+                if (logData.proofUrl && logData.proofUrl !== "") {
+                    await updateDoc(docSnap.ref, { proofUrl: "" });
+                }
+            });
+        } catch (error) {
+            console.error("Image cleanup task failure: ", error);
+        }
+    }
+
+    window.triggerCustomSubjectModal = () => {
+        document.getElementById('custom-subject-input').value = "";
+        openModal('custom-subject-modal');
+    };
+
+    window.saveCustomSubjectNode = () => {
+        const rawLabel = document.getElementById('custom-subject-input').value.trim();
+        if(!rawLabel) return alert("Subject identifier label cannot be empty.");
+        const machineValue = rawLabel.toLowerCase().replace(/[^a-z0-9]/g, '_');
+
+        const timerSelect = document.getElementById('timer-subject-select');
+        const manualSelect = document.getElementById('session-type');
+        
+        const newOpt1 = new Option(`📁 ${rawLabel}`, machineValue);
+        const newOpt2 = new Option(rawLabel, machineValue);
+        
+        timerSelect.add(newOpt1);
+        manualSelect.add(newOpt2);
+
+        const filtersContainer = document.getElementById('insights-subject-tabs-container');
+        if(filtersContainer) {
+            const btn = document.createElement('button');
+            btn.className = 'filter-tab-btn';
+            btn.textContent = rawLabel;
+            btn.onclick = () => {
+                document.querySelectorAll('#insights-subject-tabs-container .filter-tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                setInsightsSubject(machineValue);
+            };
+            filtersContainer.appendChild(btn);
+        }
+
+        closeModal('custom-subject-modal');
+        alert(`Custom mapping registered: "${rawLabel}" is now active across engine branches.`);
+    };
+
+    window.startYptLiveTimer = () => {
+        if(yptIsRunning) return;
+        yptIsRunning = true;
+        document.getElementById('btn-timer-start').disabled = true;
+        document.getElementById('btn-timer-pause').disabled = false;
+        document.getElementById('btn-timer-stop').disabled = false;
+        document.getElementById('timer-subject-select').disabled = true;
+
+        yptTimerRef = setInterval(() => {
+            yptAccumulatedSeconds++;
+            const hrs = Math.floor(yptAccumulatedSeconds / 3600).toString().padStart(2, '0');
+            const mins = Math.floor((yptAccumulatedSeconds % 3600) / 60).toString().padStart(2, '0');
+            const secs = (yptAccumulatedSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('ypt-stopwatch-label').textContent = `${hrs}:${mins}:${secs}`;
+        }, 1000);
+    };
+
+    window.pauseYptLiveTimer = () => {
+        if(!yptIsRunning) return;
+        yptIsRunning = false;
+        clearInterval(yptTimerRef);
+        document.getElementById('btn-timer-start').disabled = false;
+        document.getElementById('btn-timer-pause').disabled = true;
+    };
+
+    window.stopAndLogYptLiveTimer = async () => {
+        if(yptAccumulatedSeconds < 10) {
+            alert("Sessions must be longer than 10 seconds to generate focus scores.");
+            resetYptTimerState();
+            return;
+        }
+        
+        yptIsRunning = false;
+        clearInterval(yptTimerRef);
+        
+        const selectedSubject = document.getElementById('timer-subject-select').value;
+        const mappedHours = parseFloat((yptAccumulatedSeconds / 3600).toFixed(2));
+        const totalMinutesCalculated = Math.floor(yptAccumulatedSeconds / 60);
+
+        setCloudStatus('syncing');
+        try {
+            let calculatedPoints = mappedHours * 20; 
+            if (selectedSubject === 'general' || selectedSubject === 'test') { calculatedPoints = mappedHours * 30; }
+
+            await addDoc(collection(db, `users/${currentUserId}/logs`), { 
+                type: selectedSubject, 
+                totalHours: mappedHours, 
+                maxFocus: totalMinutesCalculated > 0 ? totalMinutesCalculated : 1, 
+                points: calculatedPoints, 
+                proofUrl: "", 
+                hasProofPlaceholder: false, 
+                timestamp: Date.now() 
+            });
+
+            const snap = await getDoc(currentUserDocRef);
+            if(snap.exists()){
+                const data = snap.data();
+                const now = new Date();
+                const currentRunningWeek = getWeekNumber(now);
+                const currentDayStr = now.toDateString();
+                
+                let targetTodayPoints = num(data.todayPoints) + calculatedPoints;
+                let targetWeeklyPoints = num(data.weeklyPoints) + calculatedPoints;
+                
+                if (data.lastProcessedDateStr !== currentDayStr) targetTodayPoints = calculatedPoints;
+                if (num(data.lastProcessedWeek) !== currentRunningWeek) targetWeeklyPoints = calculatedPoints;
+
+                await updateDoc(currentUserDocRef, {
+                    todayHours: (data.lastProcessedDateStr !== currentDayStr) ? mappedHours : num(data.todayHours) + mappedHours, 
+                    todayPoints: targetTodayPoints,
+                    weeklyPoints: targetWeeklyPoints,
+                    totalPoints: num(data.totalPoints) + calculatedPoints,
+                    lastProcessedDateStr: currentDayStr,
+                    lastProcessedWeek: currentRunningWeek,
+                    lifetimeStudyHours: num(data.lifetimeStudyHours) + mappedHours,
+                    totalFocusSessions: num(data.totalFocusSessions) + 1
+                });
+            }
+            alert(`Focus Session Logged! Saved ${mappedHours}h onto your profile progress map.`);
+        } catch(e) {
+            console.error(e);
+        }
+        resetYptTimerState();
+    };
+
+    function resetYptTimerState() {
+        clearInterval(yptTimerRef);
+        yptAccumulatedSeconds = 0;
+        yptIsRunning = false;
+        document.getElementById('ypt-stopwatch-label').textContent = "00:00:00";
+        document.getElementById('btn-timer-start').disabled = false;
+        document.getElementById('btn-timer-pause').disabled = true;
+        document.getElementById('btn-timer-stop').disabled = true;
+        document.getElementById('timer-subject-select').disabled = false;
     }
 
     window.toggleSidebar = () => {
@@ -713,7 +1040,7 @@
         'arena': 'Squad Benchmarks & Standings', 
         'warroom': 'Private head-to-head War Room',
         'inbox': 'Squad Messenger Hub',
-        'logger': 'Data Logging Matrix',
+        'logger': 'Manual Session Backup Portal',
         'streaks': 'Streak Monitor Diagnostic',
         'profile': 'My Personal Profile', 
         'insights': 'Matrix Analytics Engine', 
@@ -737,7 +1064,6 @@
         if (s === 'syncing') { el.innerHTML = '🟡 Syncing...'; }
         else if (s === 'error') { el.innerHTML = `🔴 ${detail || 'Error'}`; }
         else { el.innerHTML = '🟢 Synced'; }
-        el.className = `cloud-status ${s}`;
     }
 
     window.toggleAuthMode = () => {
@@ -789,15 +1115,21 @@
                 lastProcessedWeek: getWeekNumber(new Date()),
                 lastProcessedMonth: new Date().getMonth(),
                 lifetimeStudyHours: 0, lifetimeTestMinutes: 0, focusPenaltyCount: 0, totalFocusSessions: 0
-            });
+                });
         } catch (e) { alert(e.message); setCloudStatus('synced'); }
     };
 
-    window.logout = () => signOut(auth);
+    window.logout = () => {
+        Object.values(chatListeners).forEach(unsub => unsub());
+        chatListeners = {};
+        signOut(auth);
+    };
 
     window.setLeaderboardTimelineFilter = (filterName) => {
         leaderboardTimelineFilter = filterName;
-        document.querySelectorAll('.filter-tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.filter-tab-btn').forEach(btn => {
+            if(btn.id && btn.id.startsWith('lb-filter-')) btn.classList.remove('active');
+        });
         document.getElementById(`lb-filter-${filterName}`).classList.add('active');
         
         const headerEl = document.getElementById('lb-metric-header');
@@ -806,6 +1138,25 @@
         else if (filterName === 'monthly') headerEl.textContent = "Monthly Pts";
         
         renderLeaderboardData();
+    };
+
+    window.setInsightsTimeline = (filter) => {
+        insightsTimeFilter = filter;
+        insightsPageOffset = 0; 
+        document.querySelectorAll('[id^="insights-time-"]').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(`insights-time-${filter}`).classList.add('active');
+        calculateInsights();
+    };
+
+    window.setInsightsSubject = (subj) => {
+        insightsSubjectFilter = subj;
+        insightsPageOffset = 0;
+        calculateInsights();
+    };
+
+    window.navigateInsightsOffset = (dir) => {
+        insightsPageOffset += dir;
+        calculateInsights();
     };
 
     async function evaluateAutonomousCycleSynchronization(snapshotData) {
@@ -865,6 +1216,8 @@
             currentUserId = user.uid; currentUserDocRef = doc(db, "users", user.uid);
             document.getElementById('auth-screen').classList.remove('active');
             
+            runClientSideImageScrubber(user.uid);
+
             onSnapshot(currentUserDocRef, (docSnap) => {
                 if(docSnap.exists()){
                     const data = docSnap.data();
@@ -914,13 +1267,26 @@
                 snapshot.forEach(docSnap => {
                     const log = docSnap.data();
                     cachedLogsForCharts.push(log);
-                    const btn = log.proofUrl ? `<button class="btn-alt btn-small" onclick="viewImage('${log.proofUrl}')">👁️ Proof</button>` : '';
+                    
+                    let btn = '';
+                    if (log.proofUrl && log.proofUrl !== "") {
+                        btn = `<button class="btn-alt btn-small" onclick="viewImage('${log.proofUrl}')">👁️ Proof</button>`;
+                    } else if (log.hasProofPlaceholder) {
+                        btn = `<span style="font-size:0.75rem; color:var(--text-muted); font-style:italic;">🔒 Expired (1mo clean)</span>`;
+                    }
+
+                    let subjectLabel = log.type || 'focus';
+                    let subjectBadgeCss = 'sub-generic';
+                    if(subjectLabel === 'physics') { subjectBadgeCss = 'sub-phy'; }
+                    else if(subjectLabel === 'chemistry') { subjectBadgeCss = 'sub-chem'; }
+                    else if(subjectLabel === 'maths') { subjectBadgeCss = 'sub-math'; }
+
                     feed.innerHTML += `
                         <div class="timeline-entry" style="border-left-color:${log.type === 'test' ? 'var(--accent-success)' : 'var(--primary)'}">
-                            <div>
-                                <h4 style="margin-bottom:5px;">${log.type === 'test' ? '📝 Mock Test' : '⚡ Deep Work'}</h4>
-                                <div style="font-size:0.8rem; color:var(--text-muted);">${new Date(log.timestamp).toLocaleDateString()} • ${log.totalHours}h (Max Focus: ${log.maxFocus}m) • <span style="color:var(--primary)">+${Math.round(num(log.points))} pts</span></div>
-                                <div style="margin-top:10px; display:flex; gap:10px;">${btn} <button class="btn-danger btn-small" onclick="removeEntry('${docSnap.id}', ${log.totalHours}, ${log.maxFocus}, '${log.type}', ${num(log.points)}, ${log.timestamp})">Delete</button></div>
+                            <div style="width:100%">
+                                <span class="subject-badge-node ${subjectBadgeCss}">${subjectLabel}</span>
+                                <div style="font-size:0.85rem; color:var(--text-muted); font-weight:500;">${new Date(log.timestamp).toLocaleDateString()} • ${log.totalHours}h (Max Focus: ${log.maxFocus}m) • <span style="color:var(--primary); font-weight:700;">+${Math.round(num(log.points))} pts</span></div>
+                                <div style="margin-top:14px; display:flex; gap:12px; align-items:center;">${btn} <button class="btn-danger btn-small" onclick="removeEntry('${docSnap.id}', ${log.totalHours}, ${log.maxFocus}, '${log.type}', ${num(log.points)}, ${log.timestamp})">Delete</button></div>
                             </div>
                         </div>`;
                 });
@@ -942,7 +1308,8 @@
             if(globalLeaderboardUnsubscribe) globalLeaderboardUnsubscribe();
             if(challengesUnsubscribe) challengesUnsubscribe();
             if(notiChallengesUnsub) notiChallengesUnsub();
-            if(notiMessagesUnsub) notiMessagesUnsub();
+            Object.values(chatListeners).forEach(unsub => unsub());
+            chatListeners = {};
         }
     });
 
@@ -995,6 +1362,7 @@
             loadWarRoomRivalData();
             renderLeaderboardData();
             renderWhatsAppRosterList();
+            syncChatNotificationListeners(); 
 
         }, (error) => {
             console.error("Database initialization fault map.", error);
@@ -1007,7 +1375,7 @@
         tbody.innerHTML = '';
 
         if (cachedGlobalUsers.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No squad members logged yet.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px;">No squad members logged yet.</td></tr>`;
             return;
         }
 
@@ -1024,15 +1392,15 @@
 
             const badge = u.streak > 0 ? `<span class="streak-badge">🔥 ${u.streak}</span>` : `<span style="color:var(--text-muted)">0</span>`;
             const av = u.profilePicUrl 
-                ? `<img src="${u.profilePicUrl}" style="width:30px; height:30px; border-radius:50%; object-fit:cover;">` 
-                : `<div style="width:30px; height:30px; border-radius:50%; background:var(--primary); color:white; display:flex; justify-content:center; align-items:center; font-size:0.9rem; font-weight:bold;">${u.name.charAt(0).toUpperCase()}</div>`;
+                ? `<img src="${u.profilePicUrl}" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid var(--border-color);">` 
+                : `<div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color:white; display:flex; justify-content:center; align-items:center; font-size:1rem; font-weight:bold; border:2px solid var(--border-color);">${u.name.charAt(0).toUpperCase()}</div>`;
 
             tr.innerHTML = `
-                <td style="font-weight:bold; color:var(--text-muted);">#${index + 1}</td>
-                <td><div style="display:flex; align-items:center; gap:10px;">${av} <strong style="color:var(--text-main);">${u.name}</strong></div></td>
-                <td style="color:var(--primary); font-weight:bold; font-family:'Poppins';">${Math.round(u[displayField])}</td>
-                <td style="color:var(--text-muted); font-size:0.9rem;">${Math.round(u.totalPoints)}</td>
-                <td>${badge}</td>
+                <td style="font-weight:700; color:var(--text-muted); padding-left: 24px;">#${index + 1}</td>
+                <td><div style="display:flex; align-items:center; gap:12px;">${av} <strong style="color:var(--text-main); font-weight: 600;">${u.name}</strong></div></td>
+                <td style="color:var(--primary); font-weight:800; font-family:'Poppins'; font-size: 1.1rem;">${Math.round(u[displayField])}</td>
+                <td style="color:var(--text-muted); font-size:0.9rem; font-weight: 600;">${Math.round(u.totalPoints)}</td>
+                <td style="padding-right: 24px;">${badge}</td>
             `;
             tbody.appendChild(tr);
         });
@@ -1048,7 +1416,7 @@
         if (!liveHoursEl) return;
 
         liveHoursEl.textContent = `${hours.toFixed(1)}h`;
-        wheelBox.style.borderTopColor = hours >= 10.0 ? 'var(--accent-success)' : '#ea580c';
+        wheelBox.style.borderTopColor = hours >= 10.0 ? 'var(--accent-success)' : '#F59E0B';
 
         if (hours >= 10.0) {
             statusLblEl.textContent = "Secured";
@@ -1057,7 +1425,7 @@
             subMsgEl.textContent = "Great job! You have exceeded the 10.0-hour threshold. Tonight at midnight your streak will increment.";
         } else {
             statusLblEl.textContent = "Pending";
-            statusLblEl.style.color = "#ea580c";
+            statusLblEl.style.color = "#F59E0B";
             titleMsgEl.textContent = "Keep Pushing!";
             const delta = 10.0 - hours;
             subMsgEl.textContent = `Log ${delta.toFixed(1)} more hours before 12:00 AM midnight to maintain or start your engine streak.`;
@@ -1085,7 +1453,6 @@
         }
     };
 
-    /* PRIVATE WAR ROOM REAL-TIME COMPREHENSIVE CHALLENGE ENGINE */
     window.triggerWarRoomChallenge = async () => {
         const rivalUid = document.getElementById('warroom-rival-select').value;
         const typeSelected = document.getElementById('warroom-challenge-type').value;
@@ -1099,7 +1466,7 @@
                 challengeType: typeSelected,
                 timestamp: Date.now(),
                 expiresAt: typeSelected.startsWith('daily') ? Date.now() + (24*60*60*1000) : Date.now() + (7*24*60*60*1000), 
-                status: "pending" // Challenge begins in pending state until accepted by target recipient
+                status: "pending"
             });
             setCloudStatus('synced');
             alert("Accountability sprint challenge sent! Waiting for your rival to accept it.");
@@ -1115,7 +1482,7 @@
         challengesUnsubscribe = onSnapshot(query(collection(db, "challenges"), orderBy("timestamp", "desc")), (snapshot) => {
             const displayViewport = document.getElementById('challenge-cards-viewport');
             if(snapshot.empty) {
-                displayViewport.innerHTML = `<div style="color:var(--text-muted); font-size:0.9rem; padding: 20px 0; text-align:center; grid-column: 1/-1;">No concurrent sprints active. Select variables above to initiate.</div>`;
+                displayViewport.innerHTML = `<div style="color:var(--text-muted); font-size:0.95rem; padding: 40px 0; text-align:center; grid-column: 1/-1;">No concurrent sprints active. Select variables above to initiate.</div>`;
                 return;
             }
 
@@ -1133,7 +1500,6 @@
                 const c = docSnap.data();
                 c.id = docSnap.id;
 
-                // Only render if current user is participant
                 if(c.creatorId === currentUserId || c.rivalId === currentUserId) {
                     dataMatchesFound++;
                     const isCreator = c.creatorId === currentUserId;
@@ -1146,7 +1512,6 @@
                     const labelStr = formatLabels[c.challengeType] || '⚡ Custom Sprint';
                     const isExpired = Date.now() > c.expiresAt;
                     
-                    // Resolve live dynamic status scoring parameters
                     let myMetric = 0;
                     let opponentMetric = 0;
                     let metricSuffix = " pts";
@@ -1156,7 +1521,7 @@
                         opponentMetric = isCreator ? num(opponentObj?.todayHours) : num(meObj?.todayHours);
                         metricSuffix = " hrs";
                     } else if (c.challengeType === 'daily_test') {
-                        myMetric = isCreator ? num(meObj?.todayPoints) : num(opponentObj?.todayPoints); // fallback proxy metric
+                        myMetric = isCreator ? num(meObj?.todayPoints) : num(opponentObj?.todayPoints);
                         opponentMetric = isCreator ? num(opponentObj?.todayPoints) : num(meObj?.todayPoints);
                     } else if (c.challengeType === 'weekly_study') {
                         myMetric = isCreator ? num(meObj?.weeklyPoints) : num(opponentObj?.weeklyPoints);
@@ -1167,7 +1532,6 @@
                         metricSuffix = " hrs";
                     }
 
-                    // Enforce structural evaluation of Leading vs Trailing status parameters
                     let realTimeBannerHtml = "";
                     if (c.status === 'accepted' && !isExpired) {
                         if (myMetric > opponentMetric) {
@@ -1191,7 +1555,7 @@
                     let actionButtonsHtml = "";
                     if (!isCreator && c.status === 'pending' && !isExpired) {
                         actionButtonsHtml = `
-                            <div style="display:flex; gap:10px; margin-top:5px;">
+                            <div style="display:flex; gap:12px; margin-top:8px;">
                                 <button class="btn-success btn-small" style="flex:1;" onclick="updateChallengeState('${c.id}', 'accepted')">Accept</button>
                                 <button class="btn-danger btn-small" style="flex:1;" onclick="updateChallengeState('${c.id}', 'declined')">Decline</button>
                             </div>
@@ -1201,18 +1565,18 @@
                     card.innerHTML = `
                         <div class="challenge-header-block">
                             <div class="challenge-title-text">${labelStr}</div>
-                            <span class="challenge-tag-badge" style="background:${c.status === 'accepted' ? 'rgba(59,130,246,0.15)' : 'rgba(0,0,0,0.05)'}; color:${c.status === 'accepted' ? 'var(--primary)' : 'var(--text-muted)'}">${c.status}</span>
+                            <span class="challenge-tag-badge" style="background:${c.status === 'accepted' ? 'rgba(79, 70, 229, 0.1)' : 'rgba(0,0,0,0.05)'}; color:${c.status === 'accepted' ? 'var(--primary)' : 'var(--text-muted)'}">${c.status}</span>
                         </div>
-                        <div style="font-size:0.75rem; color:var(--text-muted);">Deadline: ${new Date(c.expiresAt).toLocaleTimeString()} (${new Date(c.expiresAt).toLocaleDateString()})</div>
+                        <div style="font-size:0.8rem; font-weight:600; color:var(--text-muted);">Deadline: ${new Date(c.expiresAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} (${new Date(c.expiresAt).toLocaleDateString()})</div>
                         
                         <div class="challenge-comparison-row">
                             <div class="challenge-competitor-slot">
-                                <div style="font-size:0.75rem; font-weight:bold; color:var(--primary);">${myName}</div>
+                                <div style="font-size:0.8rem; font-weight:700; color:var(--primary); text-transform: uppercase;">${myName}</div>
                                 <div class="challenge-competitor-val">${myMetric.toFixed(1)}${metricSuffix}</div>
                             </div>
                             <div class="challenge-vs-divider">VS</div>
                             <div class="challenge-competitor-slot">
-                                <div style="font-size:0.75rem; font-weight:bold; color:var(--accent-danger);">${opponentName}</div>
+                                <div style="font-size:0.8rem; font-weight:700; color:var(--accent-danger); text-transform: uppercase;">${opponentName}</div>
                                 <div class="challenge-competitor-val">${opponentMetric.toFixed(1)}${metricSuffix}</div>
                             </div>
                         </div>
@@ -1224,7 +1588,7 @@
             });
 
             if(dataMatchesFound === 0) {
-                displayViewport.innerHTML = `<div style="color:var(--text-muted); font-size:0.9rem; padding: 20px 0; text-align:center; grid-column: 1/-1;">No concurrent sprints active. Select variables above to initiate.</div>`;
+                displayViewport.innerHTML = `<div style="color:var(--text-muted); font-size:0.95rem; padding: 40px 0; text-align:center; grid-column: 1/-1;">No concurrent sprints active. Select variables above to initiate.</div>`;
             }
         });
     }
@@ -1239,8 +1603,6 @@
         }
     };
 
-
-    /* WHATSAPP-STYLE SQUAD ROSTER INTERACTIVE MESSENGER ENGINE */
     function renderWhatsAppRosterList() {
         const rosterViewport = document.getElementById('im-roster-viewport');
         if(!rosterViewport) return;
@@ -1248,7 +1610,7 @@
 
         const squadRivals = cachedGlobalUsers.filter(u => u.uid !== currentUserId);
         if(squadRivals.length === 0) {
-            rosterViewport.innerHTML = `<div style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding:20px;">No squad members online.</div>`;
+            rosterViewport.innerHTML = `<div style="color:var(--text-muted); font-size:0.85rem; font-weight: 500; text-align:center; padding:30px 20px;">No squad members online.</div>`;
             return;
         }
 
@@ -1278,7 +1640,6 @@
     window.activateRosterChatPane = (targetUid, targetName, targetProfilePic) => {
         activeRosterChatUid = targetUid;
         
-        // UI Layout Updates
         document.getElementById('im-blank-state').classList.add('hidden');
         document.getElementById('im-chat-header').classList.remove('hidden');
         document.getElementById('im-chat-logs').classList.remove('hidden');
@@ -1289,22 +1650,20 @@
         if(targetProfilePic) avHeader.innerHTML = `<img src="${targetProfilePic}">`;
         else avHeader.textContent = targetName.charAt(0).toUpperCase();
 
-        renderWhatsAppRosterList(); // update active class visual states
+        renderWhatsAppRosterList(); 
 
-        // Clear dynamic unread badge indicators locally
         const unreadNode = document.getElementById(`unread-pill-${targetUid}`);
         if(unreadNode) unreadNode.classList.add('hidden');
 
-        // Mount real-time messaging subcollection stream listener
         const chatId = [currentUserId, targetUid].sort().join('_');
         const logsViewport = document.getElementById('im-chat-logs');
-        logsViewport.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem; text-align:center;">Syncing conversation matrix...</div>';
+        logsViewport.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem; font-weight:500; text-align:center;">Syncing conversation matrix...</div>';
 
         if(chatUnsubscribe) chatUnsubscribe();
         chatUnsubscribe = onSnapshot(query(collection(db, `chats/${chatId}/messages`), orderBy("timestamp", "asc")), (snapshot) => {
             logsViewport.innerHTML = '';
             if(snapshot.empty) {
-                logsViewport.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem; text-align:center;">Conversation engine empty. Send a prompt below to launch communication.</div>';
+                logsViewport.innerHTML = '<div style="color:var(--text-muted); font-size:0.85rem; font-weight:500; text-align:center;">Conversation engine empty. Send a prompt below to launch communication.</div>';
                 return;
             }
             snapshot.forEach(docSnap => {
@@ -1321,7 +1680,7 @@
                 `;
                 logsViewport.appendChild(bubble);
             });
-            logsViewport.scrollTop = logsViewport.scrollHeight;
+            setTimeout(() => { logsViewport.scrollTop = logsViewport.scrollHeight; }, 50);
         });
     };
 
@@ -1335,7 +1694,7 @@
         try {
             await addDoc(collection(db, `chats/${chatId}/messages`), { 
                 senderId: currentUserId, 
-                recipientId: activeRosterChatUid, // Explicitly target user to sync message badges
+                recipientId: activeRosterChatUid, 
                 text: text, 
                 timestamp: Date.now(),
                 isRead: false
@@ -1345,28 +1704,21 @@
         }
     };
 
+    function updateMasterBadgeUI() {
+        const masterBadge = document.getElementById('noti-badge-count');
+        if(masterBadge) masterBadge.textContent = activeIncomingChallengesCount + activeIncomingMessagesCount;
+    }
 
-    /* UNIFIED NOTIFICATION CENTER HUB: CHAT MESSAGE & CHALLENGE ALERTS SYNC */
     function initNotificationCenterHub() {
         if(notiChallengesUnsub) notiChallengesUnsub();
-        if(notiMessagesUnsub) notiMessagesUnsub();
 
-        let activeIncomingChallengesCount = 0;
-        let activeIncomingMessagesCount = 0;
-
-        const updateMasterBadgeUI = () => {
-            const masterBadge = document.getElementById('noti-badge-count');
-            masterBadge.textContent = activeIncomingChallengesCount + activeIncomingMessagesCount;
-        };
-
-        // 1. Challenges Notification Engine Stream
         notiChallengesUnsub = onSnapshot(query(collection(db, "challenges"), where("rivalId", "==", currentUserId), where("status", "==", "pending")), (snapshot) => {
             const container = document.getElementById('noti-challenges-container');
             activeIncomingChallengesCount = snapshot.size;
             updateMasterBadgeUI();
 
             if(snapshot.empty) {
-                container.innerHTML = `<div style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding: 5px 0;">No pending challenge requests.</div>`;
+                container.innerHTML = `<div style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding: 12px 0;">No pending challenge requests.</div>`;
                 return;
             }
 
@@ -1388,63 +1740,67 @@
                 container.appendChild(item);
             });
         });
+    }
 
-        // 2. Chat Messaging Notification Engine Stream
-        // Scans the collection group layout structures natively by querying messages addressed directly to current user timestamp boundaries
-        notiMessagesUnsub = onSnapshot(collection(db, "users"), (snapshot) => {
-            const msgContainer = document.getElementById('noti-messages-container');
-            msgContainer.innerHTML = "";
-            activeIncomingMessagesCount = 0;
-
-            // Iterate through every active rival stream to look across dynamic chat documents natively without compound security indexes
-            cachedGlobalUsers.forEach(u => {
-                if(u.uid !== currentUserId) {
-                    const chatId = [currentUserId, u.uid].sort().join('_');
-                    
-                    // Hook custom temporary edge lookups for checking real-time messages indexes
-                    onSnapshot(query(collection(db, `chats/${chatId}/messages`), orderBy("timestamp", "desc"), limit(1)), (mSnap) => {
+    function syncChatNotificationListeners() {
+        cachedGlobalUsers.forEach(u => {
+            if(u.uid !== currentUserId) {
+                const chatId = [currentUserId, u.uid].sort().join('_');
+                if(!chatListeners[chatId]) {
+                    chatListeners[chatId] = onSnapshot(query(collection(db, `chats/${chatId}/messages`), orderBy("timestamp", "desc"), limit(1)), (mSnap) => {
                         if(!mSnap.empty) {
-                            const lastMsg = mSnap.docs[0].data();
-                            
-                            // If user is recipient and chat is not currently open, treat as unread alert boundary
-                            if(lastMsg.senderId === u.uid && activeRosterChatUid !== u.uid) {
-                                activeIncomingMessagesCount++;
-                                updateMasterBadgeUI();
-
-                                // Render badge on chat window item sidebar
-                                const unreadPill = document.getElementById(`unread-pill-${u.uid}`);
-                                if(unreadPill) {
-                                    unreadPill.textContent = "New";
-                                    unreadPill.classList.remove('hidden');
-                                }
-
-                                const item = document.createElement('div');
-                                item.className = "noti-item";
-                                item.style.cursor = "pointer";
-                                item.onclick = () => {
-                                    switchTab('inbox');
-                                    activateRosterChatPane(u.uid, u.name, u.profilePicUrl);
-                                    toggleNotificationTray();
-                                };
-                                item.innerHTML = `
-                                    <div><strong>${u.name}</strong> sent a chat alert:</div>
-                                    <div style="font-style:italic; color:var(--text-muted); font-size:0.8rem;">"${lastMsg.text}"</div>
-                                `;
-                                msgContainer.appendChild(item);
-                            }
+                            latestChatMessages[chatId] = { user: u, msg: mSnap.docs[0].data() };
+                        } else {
+                            delete latestChatMessages[chatId];
                         }
+                        renderChatNotifications();
                     });
                 }
-            });
-
-            setTimeout(() => {
-                if (msgContainer.innerHTML === "") {
-                    msgContainer.innerHTML = `<div style="color:var(--text-muted); font-size:0.8rem; text-align:center; padding: 5px 0;">No unread text messages.</div>`;
-                }
-            }, 1200);
+            }
         });
     }
 
+    function renderChatNotifications() {
+        const msgContainer = document.getElementById('noti-messages-container');
+        if(!msgContainer) return;
+        msgContainer.innerHTML = "";
+        let unreadCount = 0;
+
+        Object.values(latestChatMessages).forEach(data => {
+            const u = data.user;
+            const lastMsg = data.msg;
+
+            if(lastMsg.senderId === u.uid && activeRosterChatUid !== u.uid) {
+                unreadCount++;
+                const unreadPill = document.getElementById(`unread-pill-${u.uid}`);
+                if(unreadPill) {
+                    unreadPill.textContent = "New";
+                    unreadPill.classList.remove('hidden');
+                }
+
+                const item = document.createElement('div');
+                item.className = "noti-item";
+                item.style.cursor = "pointer";
+                item.onclick = () => {
+                    switchTab('inbox');
+                    activateRosterChatPane(u.uid, u.name, u.profilePicUrl);
+                    toggleNotificationTray();
+                };
+                item.innerHTML = `
+                    <div><strong style="color:var(--text-main);">${u.name}</strong> sent a chat alert:</div>
+                    <div style="font-style:italic; color:var(--text-muted); font-size:0.8rem; margin-top:4px;">"${lastMsg.text}"</div>
+                `;
+                msgContainer.appendChild(item);
+            }
+        });
+
+        activeIncomingMessagesCount = unreadCount;
+        updateMasterBadgeUI();
+
+        if (msgContainer.innerHTML === "") {
+            msgContainer.innerHTML = `<div style="color:var(--text-muted); font-size:0.85rem; text-align:center; padding: 12px 0;">No unread text messages.</div>`;
+        }
+    }
 
     window.updateProfileMeta = async () => {
         if(!currentUserDocRef) return;
@@ -1464,7 +1820,7 @@
             const base64 = await processImage(e.target.files[0]);
             await updateDoc(currentUserDocRef, { profilePicUrl: base64 });
             setCloudStatus('synced');
-        } catch(err) { alert("Upload failed"); }
+        } catch(err) { alert(err.message || "Upload failed"); }
     };
 
     window.logSession = async () => {
@@ -1478,20 +1834,30 @@
 
         setCloudStatus('syncing');
         try {
-            let pts = 0, penalty = 0;
-            if (type === 'focus') { 
-                pts = maxFocus <= 90 ? totalHours * 20 : totalHours * 15; 
-                penalty = maxFocus > 90 ? 1 : 0; 
-            } else if (type === 'test') { 
+            let pts = 0;
+            if (type === 'test' || type === 'general') { 
                 pts = totalHours * 30; 
+            } else {
+                pts = totalHours * 20;
             }
 
             let proofBase64 = "";
-            if (fileInput.files.length > 0) proofBase64 = await processImage(fileInput.files[0]);
+            let hasProofPlaceholder = false;
+            if (fileInput.files.length > 0) {
+                try {
+                    proofBase64 = await processImage(fileInput.files[0]);
+                    hasProofPlaceholder = true; 
+                } catch(imgErr) {
+                    setCloudStatus('synced');
+                    return alert(imgErr.message);
+                }
+            }
 
             await addDoc(collection(db, `users/${currentUserId}/logs`), { 
-                type, totalHours, maxFocus, points: pts, proofUrl: proofBase64, timestamp: Date.now() 
+                type, totalHours, maxFocus, points: pts, proofUrl: proofBase64, hasProofPlaceholder: hasProofPlaceholder, timestamp: Date.now() 
             });
+
+            runClientSideImageScrubber(currentUserId);
 
             const snap = await getDoc(currentUserDocRef);
             if(snap.exists()){
@@ -1518,10 +1884,9 @@
                     lastProcessedWeek: currentRunningWeek,
                     lastProcessedMonth: currentMonthIdx,
                     lastProcessedDateStr: currentDayStr,
-                    lifetimeStudyHours: num(data.lifetimeStudyHours) + (type === 'focus' ? totalHours : 0),
+                    lifetimeStudyHours: num(data.lifetimeStudyHours) + totalHours,
                     lifetimeTestMinutes: num(data.lifetimeTestMinutes) + (type === 'test' ? totalHours * 60 : 0),
-                    focusPenaltyCount: num(data.focusPenaltyCount) + penalty, 
-                    totalFocusSessions: num(data.totalFocusSessions) + (type === 'focus' ? 1 : 0)
+                    totalFocusSessions: num(data.totalFocusSessions) + 1
                 });
             }
             
@@ -1543,7 +1908,6 @@
             const snap = await getDoc(currentUserDocRef);
             if(snap.exists()){
                 const data = snap.data();
-                let penalty = (type === 'focus' && maxFocus > 90) ? 1 : 0;
                 
                 const logDate = new Date(timestamp);
                 const isSameDay = logDate.toDateString() === new Date().toDateString();
@@ -1556,10 +1920,9 @@
                     weeklyPoints: isCurrentWeek ? Math.max(0, num(data.weeklyPoints) - pts) : num(data.weeklyPoints),
                     monthlyPoints: isCurrentMonth ? Math.max(0, num(data.monthlyPoints || 0) - pts) : num(data.monthlyPoints || 0),
                     totalPoints: Math.max(0, num(data.totalPoints) - pts),
-                    lifetimeStudyHours: Math.max(0, num(data.lifetimeStudyHours) - (type === 'focus' ? totalHours : 0)),
+                    lifetimeStudyHours: Math.max(0, num(data.lifetimeStudyHours) - totalHours),
                     lifetimeTestMinutes: Math.max(0, num(data.lifetimeTestMinutes) - (type === 'test' ? totalHours * 60 : 0)),
-                    focusPenaltyCount: Math.max(0, num(data.focusPenaltyCount) - penalty), 
-                    totalFocusSessions: Math.max(0, num(data.totalFocusSessions) - (type === 'focus' ? 1 : 0))
+                    totalFocusSessions: Math.max(0, num(data.totalFocusSessions) - 1)
                 });
             }
             setCloudStatus('synced');
@@ -1601,17 +1964,24 @@
         }
 
         const feed = document.getElementById('full-timeline-feed');
-        feed.innerHTML = '<div style="color:var(--text-muted); font-size:0.9rem;">Fetching logbook...</div>';
+        feed.innerHTML = '<div style="color:var(--text-muted); font-size:0.95rem; font-weight:500;">Fetching logbook...</div>';
         onSnapshot(query(collection(db, `users/${targetUid}/logs`), orderBy("timestamp", "desc"), limit(15)), (snapshot) => {
             feed.innerHTML = '';
             snapshot.forEach(docSnap => {
                 const log = docSnap.data();
-                const btn = log.proofUrl ? `<button class="btn-alt btn-small" onclick="viewImage('${log.proofUrl}')" style="margin-top:10px;">👁️ Evidence</button>` : '';
+                
+                let btn = '';
+                if (log.proofUrl && log.proofUrl !== "") {
+                    btn = `<button class="btn-alt btn-small" onclick="viewImage('${log.proofUrl}')" style="margin-top:10px;">👁️ Evidence</button>`;
+                } else if (log.hasProofPlaceholder) {
+                    btn = `<div style="margin-top:10px; font-size:0.8rem; color:var(--text-muted); font-style:italic;">🔒 Expired (1mo clean)</div>`;
+                }
+
                 feed.innerHTML += `
                     <div class="timeline-entry" style="border-left-color:${log.type === 'test' ? 'var(--accent-success)' : 'var(--primary)'}">
                         <div>
-                            <h4 style="margin-bottom:4px;">${log.type === 'test' ? '📝 Mock Test' : '⚡ Deep Work'} (${log.totalHours}h)</h4>
-                            <div style="font-size:0.8rem; color:var(--text-muted);">${new Date(log.timestamp).toLocaleDateString()} • <span style="color:var(--primary); font-weight:bold;">+${Math.round(num(log.points))} pts</span></div>
+                            <h4 style="margin-bottom:6px; text-transform: capitalize;">${log.type} (${log.totalHours}h)</h4>
+                            <div style="font-size:0.85rem; color:var(--text-muted); font-weight: 500;">${new Date(log.timestamp).toLocaleDateString()} • <span style="color:var(--primary); font-weight:700;">+${Math.round(num(log.points))} pts</span></div>
                             ${btn}
                         </div>
                     </div>`;
@@ -1624,23 +1994,23 @@
     window.openModal = (id) => document.getElementById(id).classList.add('active');
     window.viewImage = (b64) => { document.getElementById('viewer-img').src = b64; openModal('image-viewer-modal'); };
     
-    function generateResponsiveBars(svgId, dataArray, labelField, valueField, barColor) {
+    function generateResponsiveBars(svgId, dataArray, valueField, barColor) {
         const svg = document.getElementById(svgId);
         if(!svg) return;
         svg.innerHTML = ''; 
-        const currentTheme = document.body.getAttribute('data-theme') || 'light';
 
         if(!dataArray || dataArray.length === 0) {
             const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
             txt.setAttribute("x", "200"); txt.setAttribute("y", "100");
             txt.setAttribute("text-anchor", "middle"); txt.setAttribute("fill", "var(--text-muted)");
-            txt.setAttribute("font-size", "13"); txt.textContent = "Insufficient entries.";
+            txt.setAttribute("font-size", "14"); txt.setAttribute("font-weight", "500");
+            txt.textContent = "No data matched for this sequence.";
             svg.appendChild(txt);
             return;
         }
 
         const maxVal = Math.max(...dataArray.map(d => d[valueField]), 1);
-        const paddingLeft = 45; const chartWidth = 330; const chartHeight = 130;
+        const paddingLeft = 50; const chartWidth = 320; const chartHeight = 150;
         const barSpacing = chartWidth / dataArray.length;
 
         for(let i=0; i<=4; i++) {
@@ -1650,6 +2020,13 @@
             line.setAttribute("x2", paddingLeft + chartWidth); line.setAttribute("y2", y);
             line.setAttribute("stroke", "var(--border-color)");
             svg.appendChild(line);
+
+            const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            txt.setAttribute("x", paddingLeft - 10); txt.setAttribute("y", y + 4);
+            txt.setAttribute("text-anchor", "end"); txt.setAttribute("fill", "var(--text-muted)");
+            txt.setAttribute("font-size", "10"); txt.setAttribute("font-weight", "600");
+            txt.textContent = Math.round(maxVal - ((maxVal / 4) * i));
+            svg.appendChild(txt);
         }
 
         dataArray.forEach((item, idx) => {
@@ -1663,29 +2040,123 @@
             const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
             rect.setAttribute("x", x); rect.setAttribute("y", y);
             rect.setAttribute("width", bWidth); rect.setAttribute("height", Math.max(bHeight, 2));
-            rect.setAttribute("fill", barColor); rect.setAttribute("rx", "4");
+            rect.setAttribute("fill", barColor); rect.setAttribute("rx", "6");
             svg.appendChild(rect);
+
+            const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            t.setAttribute("x", x + (bWidth/2)); t.setAttribute("y", 195);
+            t.setAttribute("text-anchor", "middle"); t.setAttribute("fill", "var(--text-main)");
+            t.setAttribute("font-size", "9"); t.setAttribute("font-weight", "600");
+            t.textContent = item.label;
+            svg.appendChild(t);
         });
     }
 
     function calculateInsights() {
         const user = cachedGlobalUsers.find(u => u.uid === currentUserId);
         if(!user) return;
-        const stHours = num(user.lifetimeStudyHours);
-        const tsHours = num(user.lifetimeTestMinutes) / 60;
-        document.getElementById('insight-ts-ratio').textContent = (stHours > 0 ? (tsHours / stHours) : 0).toFixed(2);
         
-        const total = num(user.totalFocusSessions), penalty = num(user.focusPenaltyCount);
-        document.getElementById('insight-friction-index').textContent = `${total > 0 ? Math.round((penalty / total) * 100) : 0}%`;
+        let phyHrs = 0, chemHrs = 0, mathHrs = 0, genHrs = 0;
+        cachedLogsForCharts.forEach(log => {
+            const h = num(log.totalHours);
+            if (log.type === 'physics') phyHrs += h;
+            else if (log.type === 'chemistry') chemHrs += h;
+            else if (log.type === 'maths') mathHrs += h;
+            else genHrs += h;
+        });
 
-        const chronologicalLogs = [...cachedLogsForCharts].reverse().slice(-7);
-        const transformedData = chronologicalLogs.map(l => ({
-            dateStr: new Date(l.timestamp).toLocaleDateString([], {month:'short', day:'numeric'}),
-            hours: num(l.totalHours), points: num(l.points)
-        }));
+        document.getElementById('ypt-hours-phy').textContent = `${phyHrs.toFixed(1)} hrs`;
+        document.getElementById('ypt-hours-chem').textContent = `${chemHrs.toFixed(1)} hrs`;
+        document.getElementById('ypt-hours-math').textContent = `${mathHrs.toFixed(1)} hrs`;
+        document.getElementById('ypt-hours-tests').textContent = `${genHrs.toFixed(1)} hrs`;
 
-        generateResponsiveBars('study-hours-svg', transformedData, 'dateStr', 'hours', 'var(--primary)');
-        generateResponsiveBars('study-points-svg', transformedData, 'dateStr', 'points', '#ea580c');
+        const heatmapViewport = document.getElementById('ypt-heatmap-viewport');
+        if (heatmapViewport) {
+            heatmapViewport.innerHTML = '';
+            const last7DaysLogs = [...cachedLogsForCharts].slice(0, 7);
+            const maxLogHourValue = Math.max(...last7DaysLogs.map(x => num(x.totalHours)), 1);
+
+            if(last7DaysLogs.length === 0) {
+                heatmapViewport.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:15px; color:var(--text-muted); font-size:0.9rem; font-weight:500;">No logs found. Start the stopwatch to populate records.</div>`;
+            }
+
+            last7DaysLogs.reverse().forEach(log => {
+                const dayLabel = new Date(log.timestamp).toLocaleDateString([], {weekday: 'short', day: 'numeric'});
+                const percentageFill = (num(log.totalHours) / maxLogHourValue) * 100;
+                let barColor = 'var(--primary)';
+                if(log.type === 'physics') barColor = '#3B82F6';
+                else if(log.type === 'chemistry') barColor = '#10B981';
+                else if(log.type === 'maths') barColor = '#EC4899';
+
+                heatmapViewport.innerHTML += `
+                    <div class="ypt-heatmap-cell">
+                        <div class="ypt-heatmap-bar-wrapper">
+                            <div class="ypt-heatmap-fill" style="height: ${percentageFill}%; background-color: ${barColor}"></div>
+                        </div>
+                        <div style="font-weight:700; color:var(--text-main); font-size: 0.9rem;">${num(log.totalHours).toFixed(1)}h</div>
+                        <div style="font-weight:600; font-size:0.75rem; color:var(--text-muted);">${dayLabel}</div>
+                    </div>
+                `;
+            });
+        }
+
+        let processedDataMap = {};
+        
+        let filteredLogs = cachedLogsForCharts.filter(log => {
+            if(insightsSubjectFilter === 'all') return true;
+            return log.type === insightsSubjectFilter;
+        });
+
+        filteredLogs.forEach(log => {
+            const dateObj = new Date(log.timestamp);
+            let key = "";
+            let displayLabel = "";
+
+            if(insightsTimeFilter === 'daily') {
+                key = dateObj.toDateString(); 
+                displayLabel = dateObj.toLocaleDateString([], {month:'short', day:'numeric'});
+            } else if(insightsTimeFilter === 'weekly') {
+                const weekNum = getWeekNumber(dateObj);
+                key = `${dateObj.getFullYear()}-W${weekNum}`;
+                displayLabel = `Wk ${weekNum}`;
+            } else if(insightsTimeFilter === 'monthly') {
+                key = `${dateObj.getFullYear()}-${dateObj.getMonth()}`;
+                displayLabel = dateObj.toLocaleDateString([], {month:'short', year:'2-digit'});
+            }
+
+            if(!processedDataMap[key]) {
+                processedDataMap[key] = { label: displayLabel, hours: 0, points: 0, timestamp: log.timestamp };
+            }
+            processedDataMap[key].hours += num(log.totalHours);
+            processedDataMap[key].points += num(log.points);
+        });
+
+        let sequenceArray = Object.values(processedDataMap).sort((a,b) => a.timestamp - b.timestamp);
+
+        const frameSize = 7;
+        const totalWindows = Math.ceil(sequenceArray.length / frameSize);
+        
+        let maxOffsetPossible = Math.max(0, totalWindows - 1);
+        if(insightsPageOffset > maxOffsetPossible) insightsPageOffset = maxOffsetPossible;
+        if(insightsPageOffset < 0) insightsPageOffset = 0;
+
+        let startIndex = sequenceArray.length - ((insightsPageOffset + 1) * frameSize);
+        let endIndex = sequenceArray.length - (insightsPageOffset * frameSize);
+        if(startIndex < 0) startIndex = 0;
+        if(endIndex < 0) endIndex = 0;
+
+        let visibleSliceData = sequenceArray.slice(startIndex, endIndex);
+
+        document.getElementById('insights-pagination-label').textContent = 
+            sequenceArray.length > 0 
+            ? `Viewing Frame ${insightsPageOffset + 1} of ${Math.max(1, totalWindows)}`
+            : "No structural intervals active";
+
+        document.getElementById('insights-chart1-title').textContent = `Study Duration [Mode: ${insightsTimeFilter.toUpperCase()}]`;
+        document.getElementById('insights-chart2-title').textContent = `Points Yield Profile [Subject: ${insightsSubjectFilter.toUpperCase()}]`;
+
+        generateResponsiveBars('study-hours-svg', visibleSliceData, 'hours', 'var(--primary)');
+        generateResponsiveBars('study-points-svg', visibleSliceData, 'points', '#0EA5E9');
     }
 
     document.getElementById('username-group').style.display = "none";
