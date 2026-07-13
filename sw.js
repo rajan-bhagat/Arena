@@ -1,10 +1,10 @@
-const CACHE_NAME = 'study-arena-v2';
+const CACHE_NAME = 'study-arena-v3';
 const urlsToCache = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192x192.png',
-  './icon-512x512.png'
+  '/Arena/',
+  '/Arena/index.html',
+  '/Arena/manifest.json',
+  '/Arena/icon-192x192.png',
+  '/Arena/icon-512x512.png'
 ];
 
 self.addEventListener('install', event => {
@@ -20,12 +20,8 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
+        return response || fetch(event.request);
+      })
   );
 });
 
